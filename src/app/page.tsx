@@ -18,6 +18,7 @@ export default function App() {
   return (
     <>
       <Hidiv>HI</Hidiv>
+      <TitleDiv>this is Title</TitleDiv>
       <div
         style={{
           height: "100vh",
@@ -60,4 +61,8 @@ export default function App() {
 
 const Hidiv = tw.div`
   bg-red-500 font-sb-12
+`;
+
+const TitleDiv = tw.div`
+  bg-gray8 font-b-40
 `;
