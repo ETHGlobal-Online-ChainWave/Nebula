@@ -1,11 +1,12 @@
 "use client";
 
+import ConnectWallet from "@/app/components/ConnectWallet";
+import { useWindowSize } from "@/app/lib/ui/hooks";
+import { useWalletAuth } from "@/app/modules/wallet/hooks/useWalletAuth";
 import React, { useState } from "react";
-import { useWalletAuth } from "./modules/wallet/hooks/useWalletAuth";
-import ConnectWallet from "./components/ConnectWallet";
-import { Transaction } from "./components/Transaction";
+
 import Confetti from "react-confetti";
-import { useWindowSize } from "./lib/ui/hooks/useWindowSize";
+
 import tw from "twin.macro";
 
 export default function App() {
@@ -58,5 +59,5 @@ export default function App() {
 }
 
 const Hidiv = tw.div`
-  bg-red-500
+  bg-red-500 font-sb-12
 `;
