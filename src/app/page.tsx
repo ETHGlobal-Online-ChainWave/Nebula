@@ -12,7 +12,7 @@ export default function App() {
   const { isConnecting, isConnected, connect, connectionError, wallet } =
     useWalletAuth();
   const { width: windowWidth, height: windowHeight } = useWindowSize();
-  const [transactionSuccess, setTransactionSuccess] = useState(false);
+  //const [transactionSuccess, setTransactionSuccess] = useState(false);
 
   return (
     <>
@@ -26,9 +26,9 @@ export default function App() {
           alignItems: "center",
         }}
       >
-        {transactionSuccess && (
+        {/* {transactionSuccess && (
           <Confetti width={windowWidth} height={windowHeight} />
-        )}
+        )} */}
 
         <div className="md:min-h-[70vh] gap-2 flex flex-col justify-center items-center">
           <div className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
@@ -43,12 +43,12 @@ export default function App() {
                 />
               </div>
 
-              {isConnected && (
+              {/* {isConnected && (
                 <Transaction
                   transactionSuccess={transactionSuccess}
                   setTransactionSuccess={setTransactionSuccess}
                 />
-              )}
+              )} */}
             </div>
           </div>
         </div>
