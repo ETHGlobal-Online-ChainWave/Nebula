@@ -1,3 +1,4 @@
+/*"use client";*/
 import { Inter } from "next/font/google";
 import "./lib/ui/globals.css";
 import { WalletProvider } from "./modules/wallet/services/context";
