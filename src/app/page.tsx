@@ -10,8 +10,15 @@ import Confetti from "react-confetti";
 import tw from "twin.macro";
 
 export default function App() {
-  const { isConnecting, isConnected, connect, connectionError, wallet } =
-    useWalletAuth();
+  const {
+    isConnecting,
+    isConnected,
+    isNfcConnecting,
+    handleNfcReading,
+    connect,
+    connectionError,
+    wallet,
+  } = useWalletAuth();
   const { width: windowWidth, height: windowHeight } = useWindowSize();
   //const [transactionSuccess, setTransactionSuccess] = useState(false);
 
@@ -39,6 +46,8 @@ export default function App() {
                 <ConnectWallet
                   isConnected={isConnected}
                   isConnecting={isConnecting}
+                  isNfcConnecting={isNfcConnecting}
+                  handleNfcReading={handleNfcReading}
                   connect={connect}
                   connectionError={connectionError}
                   wallet={wallet!}
