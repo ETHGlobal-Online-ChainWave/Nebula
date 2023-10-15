@@ -8,6 +8,9 @@ import React, { useState } from "react";
 import Confetti from "react-confetti";
 
 import tw from "twin.macro";
+import { ButtonSmall } from "./components/buttons/button-small";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import ErrorPage from "./components/error";
 
 export default function App() {
   const {
@@ -20,50 +23,48 @@ export default function App() {
     wallet,
   } = useWalletAuth();
   const { width: windowWidth, height: windowHeight } = useWindowSize();
+  const { isMD } = useMediaQuery();
+
   //const [transactionSuccess, setTransactionSuccess] = useState(false);
+
+  if (isMD) return <ErrorPage />;
 
   return (
     <>
-      <Hidiv>HI</Hidiv>
-      <TitleDiv>this is Title</TitleDiv>
-      <div
-        style={{
-          height: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {/* {transactionSuccess && (
+      {isMD ? (
+        <ErrorPage />
+      ) : (
+        <>
+          <ButtonSmall
+            text="Get your Wallet"
+            isLoading={isConnecting || isConnected}
+            onClick={connect}
+          />
+          <Hidiv>HI</Hidiv>
+          <TitleDiv>this is Title</TitleDiv>
+
+          {/* {transactionSuccess && (
           <Confetti width={windowWidth} height={windowHeight} />
         )} */}
 
-        <div className="md:min-h-[70vh] gap-2 flex flex-col justify-center items-center">
-          <div className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
-            <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
-              <div className="grid divide-gray-900/5 bg-gray-50">
-                <ConnectWallet
-                  isConnected={isConnected}
-                  isConnecting={isConnecting}
-                  isNfcConnecting={isNfcConnecting}
-                  handleNfcReading={handleNfcReading}
-                  connect={connect}
-                  connectionError={connectionError}
-                  wallet={wallet!}
-                />
-              </div>
+          <ConnectWallet
+            isConnected={isConnected}
+            isConnecting={isConnecting}
+            isNfcConnecting={isNfcConnecting}
+            handleNfcReading={handleNfcReading}
+            connect={connect}
+            connectionError={connectionError}
+            wallet={wallet!}
+          />
 
-              {/* {isConnected && (
+          {/* {isConnected && (
                 <Transaction
                   transactionSuccess={transactionSuccess}
                   setTransactionSuccess={setTransactionSuccess}
                 />
               )} */}
-            </div>
-          </div>
-        </div>
-      </div>
+        </>
+      )}
     </>
   );
 }
