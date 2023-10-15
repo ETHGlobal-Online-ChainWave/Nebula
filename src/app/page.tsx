@@ -15,7 +15,7 @@ import MainPageImage1 from "public/main-page-1.png";
 import MainPageImageLeft from "public/main-page-left.png";
 import MainPageImageRight from "public/main-page-right.png";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function App() {
   const {
@@ -59,7 +59,7 @@ export default function App() {
             <ButtonSmall
               text="Get Started"
               isHighlight={true}
-              onClick={handleNfcReading}
+              onClick={() => router.push("/sign-up")}
             />
             <ButtonSmall text="I Have an Wallet" onClick={connect} />
           </ButtonBox>
