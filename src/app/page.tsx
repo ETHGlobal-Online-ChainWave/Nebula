@@ -15,6 +15,7 @@ import MainPageImage1 from "public/main-page-1.png";
 import MainPageImageLeft from "public/main-page-left.png";
 import MainPageImageRight from "public/main-page-right.png";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 export default function App() {
   const {
@@ -28,6 +29,7 @@ export default function App() {
   } = useWalletAuth();
   const { width: windowWidth, height: windowHeight } = useWindowSize();
   const { isMD } = useMediaQuery();
+  const router = useRouter();
 
   //const [transactionSuccess, setTransactionSuccess] = useState(false);
 
@@ -56,14 +58,10 @@ export default function App() {
           <ButtonBox>
             <ButtonSmall
               text="Get Started"
-              isLoading={isConnecting || isNfcConnecting}
+              isHighlight={true}
               onClick={handleNfcReading}
             />
-            <ButtonSmall
-              text="I Have an Wallet"
-              isLoading={isConnecting || isNfcConnecting}
-              onClick={connect}
-            />
+            <ButtonSmall text="I Have an Wallet" onClick={connect} />
           </ButtonBox>
         </>
       )}
