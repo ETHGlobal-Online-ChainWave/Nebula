@@ -8,8 +8,8 @@ body {
   height: 100%;
   font-size: 14px;
   font-family: Pretendard, Arial, Helvetica, sans-serif;
-  background-color: white;
-  color: black;
+  background-color: #1c1c23;
+  color: white;
 
   /* background-image: url('bg.jpeg'); */
   background-repeat: no-repeat;
