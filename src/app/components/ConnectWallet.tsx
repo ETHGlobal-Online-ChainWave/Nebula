@@ -6,7 +6,9 @@ interface ConnectWalletProps {
   connectionError: string | null;
   isConnecting: boolean;
   isConnected: boolean;
+  isNfcConnecting: boolean;
   connect: () => Promise<void>;
+  handleNfcReading: () => Promise<void>;
   wallet: ComethWallet;
 }
 
@@ -14,7 +16,9 @@ function ConnectWallet({
   connectionError,
   isConnecting,
   isConnected,
+  isNfcConnecting,
   connect,
+  handleNfcReading,
   wallet,
 }: ConnectWalletProps): JSX.Element {
   const getTextButton = () => {
@@ -33,8 +37,15 @@ function ConnectWallet({
     } else if (isConnecting) {
       return (
         <>
-          <Icons.spinner className="h-6 w-6 animate-spin" />
+          <Icons.spinner className="w-6 h-6 animate-spin" />
           {"Getting wallet..."}
+        </>
+      );
+    } else if (isNfcConnecting) {
+      return (
+        <>
+          <Icons.spinner className="w-6 h-6 animate-spin" />
+          {"Tap your card..."}
         </>
       );
     } else {
@@ -48,7 +59,7 @@ function ConnectWallet({
         <button
           disabled={isConnecting || isConnected || !!connectionError}
           className="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100 disabled:bg-white"
-          onClick={connect}
+          onClick={handleNfcReading}
         >
           {getTextButton()}
         </button>
