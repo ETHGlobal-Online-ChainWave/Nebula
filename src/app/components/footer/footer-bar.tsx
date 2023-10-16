@@ -5,9 +5,14 @@ import Image from "next/image";
 import { IconCalendar, IconCredit, IconHome, IconPlus } from "../icons";
 import QrCodeImage from "public/qr-code.png";
 
-function FooterBar() {
+interface Props {
+  isBackBoard?: boolean;
+}
+
+function FooterBar({ isBackBoard }: Props) {
   return (
-    <FooterWrapper>
+    <FooterWrapper isBackBoard={isBackBoard}>
+      <StatusBox>hi</StatusBox>
       <BarBackground src={FooterBarBackGround} alt="image" />
       <IconButtonBox>
         <LeftIconBox>
@@ -28,8 +33,20 @@ function FooterBar() {
 
 export default FooterBar;
 
-const FooterWrapper = tw.div`
-  relative p-40 flex-center
+interface FooterWrapperProps {
+  isBackBoard?: boolean;
+}
+
+const FooterWrapper = styled.div<FooterWrapperProps>(({ isBackBoard }) => [
+  tw`
+  relative pb-15 flex-center 
+`,
+  isBackBoard && tw`pt-100 bg-gray7`,
+]);
+
+const StatusBox = tw.div`
+  absolute top-25 w-240 h-50 bg-gray8 rounded-10
+  font-b-24 text-white text-center flex-center
 `;
 
 const BarBackground = tw(Image)`

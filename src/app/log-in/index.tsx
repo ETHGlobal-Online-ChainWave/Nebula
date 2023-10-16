@@ -12,7 +12,7 @@ interface Props {
   isSuccess: boolean;
 }
 
-export const SignUpPage = ({ isSuccess }: Props) => {
+export const LogInPage = ({ isSuccess }: Props) => {
   const warpperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -37,8 +37,9 @@ export const SignUpPage = ({ isSuccess }: Props) => {
         <CardImage src={CreditCardImage} alt="credit-card-image" />
         <LottieWrapper ref={warpperRef} />
       </Wrapper>
+
       <FooterBarBox>
-        <FooterBar isBackBoard={true} />
+        <FooterBar />
       </FooterBarBox>
     </>
   );

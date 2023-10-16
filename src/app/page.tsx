@@ -54,7 +54,7 @@ export default function App() {
               isHighlight={true}
               onClick={() => router.push("/sign-up")}
             />
-            <ButtonSmall text="I Have an Wallet" onClick={connect} />
+            <ButtonSmall text="I Have an Wallet" onClick={() => router.push("/log-in")} />
           </ButtonBox>
         </>
       )}
