@@ -4,15 +4,38 @@ import FooterBarBackGround from "public/footer-bar-bg.png";
 import Image from "next/image";
 import { IconCalendar, IconCredit, IconHome, IconPlus } from "../icons";
 import QrCodeImage from "public/qr-code.png";
+import loading from "public/loading-circle.json";
+import lottie from "lottie-web/build/player/lottie_light";
+import { useEffect, useRef } from "react";
 
 interface Props {
   isBackBoard?: boolean;
+  isLoading?: boolean;
 }
 
-function FooterBar({ isBackBoard }: Props) {
+function FooterBar({ isBackBoard, isLoading }: Props) {
+  const warpperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!warpperRef.current || !isLoading) return;
+    lottie.loadAnimation({
+      container: warpperRef.current,
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      animationData: loading,
+    });
+
+    return () => {
+      lottie.destroy();
+    };
+  }, [warpperRef, isLoading]);
+
   return (
     <FooterWrapper isBackBoard={isBackBoard}>
-      <StatusBox>hi</StatusBox>
+      <StatusBox>
+        <LottieWrapper ref={warpperRef} />
+      </StatusBox>
       <BarBackground src={FooterBarBackGround} alt="image" />
       <IconButtonBox>
         <LeftIconBox>
@@ -77,4 +100,8 @@ const Qrcode = tw(Image)`
 
 const RightIconBox = tw.div`
   absolute top-18 right-24 flex gap-40
+`;
+
+const LottieWrapper = tw.div`
+  w-20 h-20 flex-center absolute absolute-center
 `;

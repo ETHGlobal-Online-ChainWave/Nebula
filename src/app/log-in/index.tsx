@@ -39,7 +39,7 @@ export const LogInPage = ({ isSuccess }: Props) => {
       </Wrapper>
 
       <FooterBarBox>
-        <FooterBar />
+        <FooterBar isBackBoard={true} isLoading={true} />
       </FooterBarBox>
     </>
   );
