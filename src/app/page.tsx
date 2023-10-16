@@ -33,8 +33,6 @@ export default function App() {
 
   //const [transactionSuccess, setTransactionSuccess] = useState(false);
 
-  if (isMD) return <ErrorPage />;
-
   return (
     <>
       {isMD ? (
@@ -47,14 +45,9 @@ export default function App() {
           <ImgBox>
             <MainImageLeft src={MainPageImageLeft} alt="main-page-image-left" />
             <MainImage1 src={MainPageImage1} alt="main-page-image-1" />
-            <MainImageRight
-              src={MainPageImageRight}
-              alt="main-page-image-right"
-            />
+            <MainImageRight src={MainPageImageRight} alt="main-page-image-right" />
           </ImgBox>
-          <TextBox>
-            Create a Wallet Easily and Safely with your Credit Card
-          </TextBox>
+          <TextBox>Create a Wallet Easily and Safely with your Credit Card</TextBox>
           <ButtonBox>
             <ButtonSmall
               text="Get Started"

@@ -1,8 +1,9 @@
-import tw, { css, styled } from 'twin.macro';
-import FooterBarBackGround from 'public/footer-bar-bg.png';
-import Image from 'next/image';
-import { IconCalendar, IconCredit, IconHome, IconPlus } from '../icons';
-import QrCodeImage from 'public/qr-code.png';
+"use client";
+import tw, { css, styled } from "twin.macro";
+import FooterBarBackGround from "public/footer-bar-bg.png";
+import Image from "next/image";
+import { IconCalendar, IconCredit, IconHome, IconPlus } from "../icons";
+import QrCodeImage from "public/qr-code.png";
 
 function FooterBar() {
   return (

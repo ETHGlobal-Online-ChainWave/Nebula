@@ -1,3 +1,4 @@
+"use client";
 import tw, { css, styled } from "twin.macro";
 
 import LogoImg from "~/assets/images/logo.png";

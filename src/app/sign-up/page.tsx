@@ -1,28 +1,24 @@
-'use client';
-import React from 'react';
-import FooterBar from '../components/footer/footer-bar';
-import CreditCardImage from 'public/credit-card.png';
-import tw from 'twin.macro';
-import Image from 'next/image';
+"use client";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import React from "react";
+import { SignUpPage } from ".";
+import ErrorPage from "../components/error";
 
-function SignUp() {
+function Page() {
+  const { isMD } = useMediaQuery();
+  const isSuccess = true;
+
   return (
     <>
-      <Wrapper>
-        <CardImage src={CreditCardImage} alt="credit-card-image" />
-      </Wrapper>
-      <FooterBar />
+      {isMD ? (
+        <ErrorPage />
+      ) : (
+        <>
+          <SignUpPage isSuccess={isSuccess} />
+        </>
+      )}
     </>
   );
 }
 
-const Wrapper = tw.div`
-    flex-center flex-col
-
-`;
-
-const CardImage = tw(Image)`
-    max-w-270
-    `;
-
-export default SignUp;
+export default Page;

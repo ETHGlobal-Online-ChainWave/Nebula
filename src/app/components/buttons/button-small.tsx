@@ -11,12 +11,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   isHighlight?: boolean;
 }
-export const ButtonSmall = ({
-  text,
-  isLoading,
-  isHighlight,
-  ...rest
-}: Props) => {
+export const ButtonSmall = ({ text, isLoading, isHighlight, ...rest }: Props) => {
   const warpperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
