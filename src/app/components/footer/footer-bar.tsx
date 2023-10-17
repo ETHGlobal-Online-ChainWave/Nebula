@@ -68,6 +68,7 @@ interface FooterWrapperProps {
 
 const FooterWrapper = styled.div<FooterWrapperProps>(({ isBackBoard }) => [
   tw`
+ 
   relative pb-15 flex-center 
 `,
   isBackBoard && tw`pt-100 bg-gray7`,

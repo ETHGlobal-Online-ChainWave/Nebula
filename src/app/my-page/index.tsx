@@ -101,6 +101,9 @@ const Wrapper = styled.div(() => [
   tw`
     flex items-center flex-col w-full h-full
     overflow-y-auto
+    flex-1
+    min-h-full
+    relative
 `,
 ]);
 
@@ -146,8 +149,6 @@ const FooterBarBox = tw.div`
 
 const TokenWrapper = tw.div`
   flex-center gap-8 pt-44
-  
-
   `;
 
 const TokenBox = styled.div(() => [
@@ -192,9 +193,9 @@ const BottomWrapper = styled.div(() => [
 ]);
 
 const TokenBalanceWrapper = tw.div`
-    flex flex-col items-center w-full 
-    py-10 gap-12
-    overflow-y-auto h-150
+    flex flex-col items-center w-full h-full
+    py-10 gap-12 pb-80
+    overflow-y-auto 
     `;
 
 const TokenBalanceBox = tw.div`
