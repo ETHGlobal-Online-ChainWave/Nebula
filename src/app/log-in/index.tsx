@@ -34,8 +34,10 @@ export const LogInPage = ({ isSuccess }: Props) => {
   return (
     <>
       <Wrapper>
+        <Title>Log in by Card</Title>
         <CardImage src={CreditCardImage} alt="credit-card-image" />
         <LottieWrapper ref={warpperRef} />
+        <Content>Put your card on the back</Content>
       </Wrapper>
 
       <FooterBarBox>
@@ -46,10 +48,18 @@ export const LogInPage = ({ isSuccess }: Props) => {
 };
 
 const Wrapper = tw.div`
-    flex-center flex-col
+flex-center flex-col text-gray3
+pt-32 gap-60
+relative
 
 `;
 
+const Title = tw.div`
+    font-r-16
+    `;
+const Content = tw.div`
+    font-r-14 text-white
+    `;
 const CardImage = tw(Image)`
     max-w-270
     `;

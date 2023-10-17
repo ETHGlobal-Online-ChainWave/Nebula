@@ -51,7 +51,9 @@ function FooterBar({ isBackBoard, isLoading }: Props) {
         </QrButtonBox>
         <RightIconBox>
           <IconPlus />
-          <IconCredit />
+          <div onClick={() => router.push("/my-card")}>
+            <IconCredit />
+          </div>
         </RightIconBox>
       </IconButtonBox>
     </FooterWrapper>
@@ -109,9 +111,16 @@ const Qrcode = tw(Image)`
     w-27 h-27 
 `;
 
-const RightIconBox = tw.div`
+const RightIconBox = styled.div(() => [
+  tw`
   absolute top-18 right-24 flex gap-40
-`;
+`,
+  css`
+    svg {
+      cursor: pointer;
+    }
+  `,
+]);
 
 const LottieWrapper = tw.div`
   w-20 h-20 flex-center absolute absolute-center
