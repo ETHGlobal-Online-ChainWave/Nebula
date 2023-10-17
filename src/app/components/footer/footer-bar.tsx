@@ -7,6 +7,7 @@ import QrCodeImage from "public/qr-code.png";
 import loading from "public/loading-circle.json";
 import lottie from "lottie-web/build/player/lottie_light";
 import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 
 interface Props {
   isBackBoard?: boolean;
@@ -15,6 +16,7 @@ interface Props {
 
 function FooterBar({ isBackBoard, isLoading }: Props) {
   const warpperRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (!warpperRef.current || !isLoading) return;
@@ -39,7 +41,9 @@ function FooterBar({ isBackBoard, isLoading }: Props) {
       <BarBackground src={FooterBarBackGround} alt="image" />
       <IconButtonBox>
         <LeftIconBox>
-          <IconHome />
+          <div onClick={() => router.push("/my-page")}>
+            <IconHome />
+          </div>
           <IconCalendar />
         </LeftIconBox>
         <QrButtonBox>
@@ -80,9 +84,16 @@ const IconButtonBox = tw.div`
   w-330 h-55 relative 
 `;
 
-const LeftIconBox = tw.div`
+const LeftIconBox = styled.div(() => [
+  tw`
   absolute top-18 left-24 flex gap-40
-`;
+`,
+  css`
+    svg {
+      cursor: pointer;
+    }
+  `,
+]);
 
 const QrButtonBox = styled.div(() => [
   tw`
