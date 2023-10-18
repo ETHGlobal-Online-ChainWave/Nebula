@@ -93,7 +93,7 @@ export const ReadQrcode = ({ isSuccess }: Props) => {
 
 const Wrapper = styled.div(() => [
   tw`
-    flex-center flex-col h-full bg-gray7 p-48 gap-24
+    flex-center flex-col h-full bg-gray7 p-48 gap-48
     
 `,
 ]);
