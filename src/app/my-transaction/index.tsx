@@ -2,14 +2,11 @@
 
 import React, { useEffect, useRef } from "react";
 import FooterBar from "../components/footer/footer-bar";
-import CreditCardImage from "public/credit-card.png";
+import QrCodeImage from "public/qr-code.png";
 import tw, { css, styled } from "twin.macro";
 import Image from "next/image";
 import lottie from "lottie-web/build/player/lottie_light";
 import congratulation from "public/congratulation.json";
-import EllipseImage from "public/Ellipse.png";
-import EthLogoImage from "public/eth-logo.png";
-import UsdtLogoImage from "public/usdt-logo.png";
 
 interface Props {
   isSuccess: boolean;
@@ -37,57 +34,43 @@ export const MyTransaction = ({ isSuccess }: Props) => {
   return (
     <>
       <Wrapper>
-        <TopWrapper>
-          <UserSummaryBox>
-            <ServiceTitle>NEBULA</ServiceTitle>
-            <UserBalance>$1,235 USD</UserBalance>
-            <AccountName>Account Name</AccountName>
-            <AccountNumber>0x7F3...9901</AccountNumber>
-          </UserSummaryBox>
-          <TokenWrapper>
-            <TokenBox>
-              <TokenTopBar1 />
-              <TokenBoxTitle>Token Type</TokenBoxTitle>
-              <TokenBoxContent>0</TokenBoxContent>
-            </TokenBox>
-            <TokenBox>
-              <TokenTopBar2 />
-              <TokenBoxTitle>Highest Token</TokenBoxTitle>
-              <TokenBoxContent>0</TokenBoxContent>
-            </TokenBox>
-            <TokenBox>
-              <TokenTopBar3 />
-              <TokenBoxTitle>Lowest Token</TokenBoxTitle>
-              <TokenBoxContent>0</TokenBoxContent>
-            </TokenBox>
-          </TokenWrapper>
-        </TopWrapper>
-        <Ellipse src={EllipseImage} alt="credit-card-image" />
-        <LottieWrapper ref={warpperRef} />
-        <BottomWrapper>
-          <TokenBalanceWrapper>
-            <TokenBalanceBox>
-              <TokenImage src={EthLogoImage} alt="credit-card-image" />
-              <TokenName>Ethereum</TokenName>
-              <TokenBalance>0 USD</TokenBalance>
-            </TokenBalanceBox>
-            <TokenBalanceBox>
-              <TokenImage src={UsdtLogoImage} alt="credit-card-image" />
-              <TokenName>Tether</TokenName>
-              <TokenBalance>0 USD</TokenBalance>
-            </TokenBalanceBox>
-            <TokenBalanceBox>
-              <TokenImage src={EthLogoImage} alt="credit-card-image" />
-              <TokenName>Token Name</TokenName>
-              <TokenBalance>0 USD</TokenBalance>
-            </TokenBalanceBox>
-            <TokenBalanceBox>
-              <TokenImage src={EthLogoImage} alt="credit-card-image" />
-              <TokenName>Token Name</TokenName>
-              <TokenBalance>0 USD</TokenBalance>
-            </TokenBalanceBox>
-          </TokenBalanceWrapper>
-        </BottomWrapper>
+        <QrWrapper>
+          <QrTitle>Transaction Qr Code</QrTitle>
+          <QrImage src={QrCodeImage} alt="qr-code-image" />
+        </QrWrapper>
+        <BolderBox>
+          <LeftCircle />
+          <DotBolder />
+          <RightCircle />
+        </BolderBox>
+        <TransactionWrapper>
+          <TransactionBox>
+            <TransactionContentBox>
+              <TransactionTitle>Transaction</TransactionTitle>
+              <TransactionContent>0</TransactionContent>
+            </TransactionContentBox>
+            <TransactionContentBox>
+              <TransactionTitle>Transaction</TransactionTitle>
+              <TransactionContent>0</TransactionContent>
+            </TransactionContentBox>
+            <TransactionContentBox>
+              <TransactionTitle>Transaction</TransactionTitle>
+              <TransactionContent>0</TransactionContent>
+            </TransactionContentBox>
+            <TransactionContentBox>
+              <TransactionTitle>Transaction</TransactionTitle>
+              <TransactionContent>0</TransactionContent>
+            </TransactionContentBox>
+            <TransactionContentBox>
+              <TransactionTitle>Transaction</TransactionTitle>
+              <TransactionContent>0</TransactionContent>
+            </TransactionContentBox>
+            <TransactionContentBox>
+              <TransactionTitle>Transaction</TransactionTitle>
+              <TransactionContent>0</TransactionContent>
+            </TransactionContentBox>
+          </TransactionBox>
+        </TransactionWrapper>
       </Wrapper>
 
       <FooterBarBox>
@@ -99,66 +82,60 @@ export const MyTransaction = ({ isSuccess }: Props) => {
 
 const Wrapper = styled.div(() => [
   tw`
-    flex items-center flex-col w-full h-full
-    overflow-y-auto
+    flex flex-col h-full
+    items-center justify-center 
+    overflow-y-auto mt-24
 `,
 ]);
-
-const TopWrapper = styled.div(() => [
-  tw`
-     w-full flex-col bg-gray7 py-25 
-    `,
-  css`
-    border-radius: 0px 0px 24px 24px;
-  `,
-]);
-const UserSummaryBox = tw.div`
-    flex-center flex-col relative gap-20 pt-100
-    `;
-
-const Ellipse = tw(Image)`
-    absolute top-0 w-350
-    `;
-
-const ServiceTitle = tw.div`
-    font-sb-16 text-white
-    `;
-
-const UserBalance = tw.div`
-    font-b-32 text-white
-    `;
-
-const AccountName = tw.div`
-    font-sb-12 text-white
-    `;
-
-const AccountNumber = tw.div`
-    font-sb-12 text-white px-12 py-8 rounded-16 bg-gray6
-`;
-
-const LottieWrapper = tw.div`
-  w-full h-full flex-center absolute absolute-center
-`;
 
 const FooterBarBox = tw.div`
   absolute bottom-0 w-full
 `;
 
-const TokenWrapper = tw.div`
-  flex-center gap-8 pt-44
-  
+const QrWrapper = tw.div`
+  flex-center flex-col w-328 h-334 h-1/2 bg-gray7
+  rounded-t-20 gap-27
+`;
 
-  `;
+const QrTitle = tw.div`
+  font-r-16 text-gray3
+`;
 
-const TokenBox = styled.div(() => [
+const QrImage = tw(Image)`
+  w-200
+`;
+
+const BolderBox = tw.div`
+  flex relative
+`;
+
+const DotBolder = tw.div`
+ flex w-328 border-dotted border-b-2 border-gray7
+`;
+
+const LeftCircle = tw.div`
+  absolute top-[-6px] left-[-8px] w-16 h-16 rounded-full bg-gray8
+`;
+
+const RightCircle = tw.div`
+absolute top-[-6px] right-[-8px] w-16 h-16 rounded-full bg-gray8
+`;
+
+const TransactionWrapper = tw.div`
+  flex-center flex-col  h-1/2 rounded-b-20
+  bg-gray6 w-328 p-24
+`;
+
+const TransactionContentBox = tw.div`
+  flex-center justify-between  w-full h-full
+  gap-20 p-6
+`;
+
+const TransactionBox = styled.div(() => [
   tw`
-  relative
-  flex-center flex-col 
-  text-center
-  bg-gray8 rounded-10
-  py-16 px-18
-  w-104 h-68
-  `,
+    flex-center flex-col w-full h-full
+    bg-gray2 rounded-20 py-16 px-20
+`,
   css`
     border-radius: 16px;
     border: 1px solid #cfcffc;
@@ -167,48 +144,10 @@ const TokenBox = styled.div(() => [
   `,
 ]);
 
-const TokenTopBar1 = tw.div`
-  absolute w-46 h-1 bg-accent5 rounded-2 top-[-1px]
-  `;
+const TransactionTitle = tw.div`
+  font-sb-16 text-white
+`;
 
-const TokenTopBar2 = tw.div`
-  absolute w-46 h-1 bg-primary10 rounded-2 top-[-1px]
-  `;
-const TokenTopBar3 = tw.div`
-  absolute w-46 h-1 bg-secondary5 rounded-2 top-[-1px]
-  `;
-const TokenBoxTitle = tw.div`
-  w-104 font-sb-12 text-gray4
-  `;
-const TokenBoxContent = tw.div`
-  font-sb-14 text-white
-  `;
-
-const BottomWrapper = styled.div(() => [
-  tw`
-    flex items-center flex-col w-full
-    gap-10
-`,
-]);
-
-const TokenBalanceWrapper = tw.div`
-    flex flex-col items-center w-full 
-    py-10 gap-12
-    overflow-y-auto h-150
-    `;
-
-const TokenBalanceBox = tw.div`
-     flex flex-center px-12 py-12 gap-8 border-solid border-gray7 border-1
-     rounded-16 w-328 h-64
-    `;
-
-const TokenImage = tw(Image)`
-    w-40
-    `;
-const TokenName = tw.div`
-    w-120 font-sb-16 text-white text-start
-    `;
-
-const TokenBalance = tw.div`
-    w-150 font-sb-16 text-white text-end
-    `;
+const TransactionContent = tw.div`
+  font-sb-16 text-white
+`;

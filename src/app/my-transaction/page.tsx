@@ -23,7 +23,7 @@ function Page() {
 }
 
 const Wrapper = tw.div`
-    flex
+    
 `;
 
 export default Page;

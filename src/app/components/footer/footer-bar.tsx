@@ -2,7 +2,7 @@
 import tw, { css, styled } from "twin.macro";
 import FooterBarBackGround from "public/footer-bar-bg.png";
 import Image from "next/image";
-import { IconCalendar, IconCredit, IconHome, IconPlus } from "../icons";
+import { IconCalendar, IconCredit, IconHome, IconMoney, IconPlus } from "../icons";
 import QrCodeImage from "public/qr-code.png";
 import loading from "public/loading-circle.json";
 import lottie from "lottie-web/build/player/lottie_light";
@@ -44,10 +44,12 @@ function FooterBar({ isBackBoard, isLoading }: Props) {
           <div onClick={() => router.push("/my-page")}>
             <IconHome />
           </div>
-          <IconCalendar />
+          <IconMoney />
         </LeftIconBox>
         <QrButtonBox>
-          <Qrcode src={QrCodeImage} alt="qr-code-image" />
+          <div onClick={() => router.push("/my-transaction")}>
+            <Qrcode src={QrCodeImage} alt="qr-code-image" />
+          </div>
         </QrButtonBox>
         <RightIconBox>
           <IconPlus />
@@ -109,7 +111,7 @@ const QrButtonBox = styled.div(() => [
 ]);
 
 const Qrcode = tw(Image)`
-    w-27 h-27 
+    w-27 h-27 clickable
 `;
 
 const RightIconBox = styled.div(() => [
