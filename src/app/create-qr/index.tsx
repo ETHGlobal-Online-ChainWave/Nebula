@@ -8,6 +8,9 @@ import Image from "next/image";
 import lottie from "lottie-web/build/player/lottie_light";
 import congratulation from "public/congratulation.json";
 
+import { Database } from "@tableland/sdk";
+import { Wallet, getDefaultProvider } from "ethers";
+
 interface Props {
   isSuccess: boolean;
 }
@@ -31,9 +34,31 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
     };
   }, [warpperRef, isSuccess]);
 
+  const privateKey = process.env.NEXT_PUBLIC_PRIVATE_KEY;
+
+  const wallet = privateKey ? new Wallet(privateKey) : null;
+  const provider = getDefaultProvider("http://127.0.0.1:8545");
+  const signer = wallet ? wallet.connect(provider) : null;
+  const db = new Database({ signer });
+
+  const writeOnTable = async () => {
+    // Insert a row into the table
+    const { meta: insert } = await db
+      .prepare(`INSERT INTO ${name} (id, name) VALUES (?, ?);`)
+      .bind(0, "Bobby Tables")
+      .run();
+
+    // Wait for transaction finality
+    await insert.txn?.wait();
+
+    // Perform a read query, requesting all rows from the table
+    const { results } = await db.prepare(`SELECT * FROM ${name};`).all();
+  };
+
   return (
     <>
       <Wrapper>
+        <button onClick={writeOnTable}>Write on table</button>
         <QrWrapper>
           <QrTitle>Create Qr Code</QrTitle>
           <QrImage src={QrCodeImage} alt="qr-code-image" />
