@@ -35,24 +35,31 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
   }, [warpperRef, isSuccess]);
 
   const privateKey = process.env.NEXT_PUBLIC_PRIVATE_KEY;
+  const alchemyKey = process.env.NEXT_PUBLIC_ALCHEMY_KEY;
 
   const wallet = privateKey ? new Wallet(privateKey) : null;
-  const provider = getDefaultProvider("http://127.0.0.1:8545");
+  const provider = getDefaultProvider(`https://polygon-mumbai.g.alchemy.com/v2/${alchemyKey}`);
   const signer = wallet ? wallet.connect(provider) : null;
-  const db = new Database({ signer });
+  const db = new Database({ signer: signer ?? undefined });
+
+  const tableName: string = "nebula_test_80001_7883";
+  const str = "hello world";
+  const blob = new Blob(["type1", "type2"], {
+    type: "text/plain",
+  });
 
   const writeOnTable = async () => {
     // Insert a row into the table
     const { meta: insert } = await db
-      .prepare(`INSERT INTO ${name} (id, name) VALUES (?, ?);`)
-      .bind(0, "Bobby Tables")
+      .prepare(`INSERT INTO ${tableName} (test_text) VALUES (?);`)
+      .bind("test2")
       .run();
 
     // Wait for transaction finality
     await insert.txn?.wait();
 
     // Perform a read query, requesting all rows from the table
-    const { results } = await db.prepare(`SELECT * FROM ${name};`).all();
+    const { results } = await db.prepare(`SELECT * FROM ${tableName};`).all();
   };
 
   return (

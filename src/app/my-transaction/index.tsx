@@ -7,6 +7,7 @@ import tw, { css, styled } from "twin.macro";
 import Image from "next/image";
 import lottie from "lottie-web/build/player/lottie_light";
 import congratulation from "public/congratulation.json";
+import { Database } from "@tableland/sdk";
 
 interface Props {
   isSuccess: boolean;
@@ -31,9 +32,16 @@ export const MyTransaction = ({ isSuccess }: Props) => {
     };
   }, [warpperRef, isSuccess]);
 
+  const tableName: string = "nebula_test_80001_7883";
+  const db = new Database();
+  const readOnTable = async () => {
+    const { results } = await db.prepare(`SELECT * FROM ${tableName};`).all();
+    console.log(results);
+  };
   return (
     <>
       <Wrapper>
+        <button onClick={readOnTable}>read</button>
         <QrWrapper>
           <QrTitle>Transaction Qr Code</QrTitle>
           <QrImage src={QrCodeImage} alt="qr-code-image" />
