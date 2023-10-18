@@ -12,7 +12,7 @@ interface Props {
   isSuccess: boolean;
 }
 
-export const MyTransaction = ({ isSuccess }: Props) => {
+export const CreateTransaction = ({ isSuccess }: Props) => {
   const warpperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export const MyTransaction = ({ isSuccess }: Props) => {
     <>
       <Wrapper>
         <QrWrapper>
-          <QrTitle>Transaction Qr Code</QrTitle>
+          <QrTitle>Create Qr Code</QrTitle>
           <QrImage src={QrCodeImage} alt="qr-code-image" />
         </QrWrapper>
         <BolderBox>

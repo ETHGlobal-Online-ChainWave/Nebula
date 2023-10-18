@@ -44,7 +44,9 @@ function FooterBar({ isBackBoard, isLoading }: Props) {
           <div onClick={() => router.push("/my-page")}>
             <IconHome />
           </div>
-          <IconMoney />
+          <div onClick={() => router.push("/read-qr")}>
+            <IconMoney />
+          </div>
         </LeftIconBox>
         <QrButtonBox>
           <div onClick={() => router.push("/my-transaction")}>
@@ -52,7 +54,9 @@ function FooterBar({ isBackBoard, isLoading }: Props) {
           </div>
         </QrButtonBox>
         <RightIconBox>
-          <IconPlus />
+          <div onClick={() => router.push("/create-qr")}>
+            <IconPlus />
+          </div>
           <div onClick={() => router.push("/my-card")}>
             <IconCredit />
           </div>
