@@ -10,6 +10,7 @@ import congratulation from "public/congratulation.json";
 import EllipseImage from "public/Ellipse.png";
 import EthLogoImage from "public/eth-logo.png";
 import UsdtLogoImage from "public/usdt-logo.png";
+import { useWalletContext } from "../modules/wallet/hooks/useWalletContext";
 
 interface Props {
   isSuccess: boolean;
@@ -17,6 +18,8 @@ interface Props {
 
 export const MyPage = ({ isSuccess }: Props) => {
   const warpperRef = useRef<HTMLDivElement>(null);
+  const { wallet } = useWalletContext();
+  const walletAddress = wallet?.getAddress();
 
   useEffect(() => {
     if (!warpperRef.current) return;
@@ -42,7 +45,9 @@ export const MyPage = ({ isSuccess }: Props) => {
             <ServiceTitle>NEBULA</ServiceTitle>
             <UserBalance>$1,235 USD</UserBalance>
             <AccountName>Account Name</AccountName>
-            <AccountNumber>0x7F3...9901</AccountNumber>
+            <AccountNumber>
+              {walletAddress?.slice(0, 5)}...{walletAddress?.slice(-4)}
+            </AccountNumber>
           </UserSummaryBox>
           <TokenWrapper>
             <TokenBox>
