@@ -88,6 +88,7 @@ const Wrapper = styled.div(() => [
     flex flex-col h-full
     items-center justify-center 
     overflow-y-auto mt-24
+    bg-gray7
 `,
 ]);
 
@@ -96,5 +97,5 @@ const FooterBarBox = tw.div`
 `;
 
 const QrReaderVideo = tw.video`
-  w-1/2
+   border-2 border-white w-300 rounded-20
 `;
