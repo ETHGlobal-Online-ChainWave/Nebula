@@ -1,4 +1,4 @@
-# defutures-frontend
+# NeBula Overview
 
 We worked on a project using React and TypeScript for the frontend. 
 - To quickly connect to the blockchain and ensure efficiency and security of the work, We utilized the Metamask SDK for connection.   
