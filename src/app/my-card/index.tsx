@@ -21,7 +21,7 @@ export const MyCard = ({ isSuccess }: Props) => {
       </Wrapper>
 
       <FooterBarBox>
-        <FooterBar isBackBoard={true} isLoading={true} />
+        <FooterBar isBackBoard={false} />
       </FooterBarBox>
     </>
   );
@@ -38,7 +38,7 @@ const Title = tw.div`
     `;
 
 const CardImage = tw(Image)`
-    max-w-270
+    w-350
     `;
 
 const LottieWrapper = tw.div`

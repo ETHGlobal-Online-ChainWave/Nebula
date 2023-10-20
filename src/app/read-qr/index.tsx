@@ -6,8 +6,9 @@ import QrCodeImage from "public/qr-code.png";
 import tw, { css, styled } from "twin.macro";
 import Image from "next/image";
 import lottie from "lottie-web/build/player/lottie_light";
-import congratulation from "public/congratulation.json";
+import loading from "public/loading-circle.json";
 import { QrReader } from "react-qr-reader";
+import { ButtonSmall } from "../components/buttons/button-small";
 
 interface Props {
   isSuccess: boolean;
@@ -22,16 +23,17 @@ export const ReadQrcode = ({ isSuccess }: Props) => {
     lottie.loadAnimation({
       container: warpperRef.current,
       renderer: "svg",
-      loop: false,
+      loop: true,
       autoplay: true,
-      animationData: congratulation,
+      animationData: loading,
     });
 
     return () => {
       lottie.destroy();
     };
   }, [warpperRef, isSuccess]);
-  const [data, setData] = useState("No result");
+
+  const [data, setData] = useState("");
 
   const videoRef = useRef(null);
 
@@ -40,12 +42,12 @@ export const ReadQrcode = ({ isSuccess }: Props) => {
       .getUserMedia({
         video: true,
       })
-      .then(stream => {
+      .then((stream: MediaStream) => {
         let video = videoRef.current;
         if (!video) return;
 
-        video.srcObject = stream;
-        video.play();
+        (video as HTMLVideoElement).srcObject = stream;
+        (video as HTMLVideoElement).play();
       })
       .catch(err => {
         console.error(err);
@@ -55,24 +57,30 @@ export const ReadQrcode = ({ isSuccess }: Props) => {
   useEffect(() => {
     getUserCamera();
   }, [videoRef]);
+
   return (
     <>
       <Wrapper>
+        <Title>Scan</Title>
         <>
           <QrReader
+            constraints={{ facingMode: "environment" }}
             onResult={(result, error) => {
               if (!!result) {
-                setData(result?.text);
+                setData(result?.getText());
               }
 
               if (!!error) {
                 console.info(error);
               }
             }}
-            style={{ width: "100%" }}
           />
-          <p>{data}</p>
+
           <QrReaderVideo ref={videoRef} />
+          <LoadingWrapper>
+            {data == "" ? <LottieWrapper ref={warpperRef} /> : <p>{data}</p>}
+          </LoadingWrapper>
+          <ButtonSmall text="Place code inside the box. Tap here to help" isHighlight={true} />
         </>
       </Wrapper>
 
@@ -85,16 +93,27 @@ export const ReadQrcode = ({ isSuccess }: Props) => {
 
 const Wrapper = styled.div(() => [
   tw`
-    flex flex-col h-full
-    items-center justify-center 
-    overflow-y-auto mt-24
+    flex-center flex-col h-full bg-gray7 p-48 gap-48
+    
 `,
 ]);
+
+const Title = tw.div`
+    font-r-16
+    `;
 
 const FooterBarBox = tw.div`
   absolute bottom-0 w-full
 `;
 
 const QrReaderVideo = tw.video`
-  w-1/2
+   border-2 border-white border-dotted w-300 rounded-20
+`;
+
+const LoadingWrapper = tw.div`
+  w-20 h-20 flex-center 
+`;
+
+const LottieWrapper = tw.div`
+  w-20 h-20 flex-center  
 `;
