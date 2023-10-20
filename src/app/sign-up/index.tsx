@@ -46,7 +46,9 @@ export const SignUpPage = ({
       autoplay: true,
       animationData: congratulation,
     });
-    router.push("/my-page");
+    setTimeout(() => {
+      router.push("/my-page");
+    }, 2000);
 
     return () => {
       lottie.destroy();
