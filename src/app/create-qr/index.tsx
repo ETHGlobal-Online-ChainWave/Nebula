@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import FooterBar from "../components/footer/footer-bar";
-import QrCodeImage from "public/qr-code 2.png";
 import tw, { css, styled } from "twin.macro";
 import Image from "next/image";
 import lottie from "lottie-web/build/player/lottie_light";
@@ -22,6 +21,7 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
   const [currentDate, setCurrentDate] = useState("");
   const [amount, setAmount] = useState(0);
   const [isEditing, setIsEditing] = useState(false);
+  const [isFinishClicked, setIsFinishClicked] = useState(false);
 
   useEffect(() => {
     if (!warpperRef.current) return;
@@ -99,7 +99,8 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
   setIsSelectBoxOpen(false);};
 
   const handleSaveClick = () => {
-    setIsSaveClicked(true); // Set the state to true when SaveBox is clicked
+    setIsSaveClicked(true);
+    setIsFinishClicked(true);
   };
 
    let qrCodeImageSrc = "/qr-code 2.png";
@@ -118,7 +119,8 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
   return (
     <>
     {isSelectBoxOpen && (
-        <SelectBox onClick={handleSelectBoxClick}>내용</SelectBox>
+        <SelectBox onClick={handleSelectBoxClick}>
+          <CustomContent/></SelectBox>
       )}
       <Wrapper>
         <button onClick={writeOnTable}>Write on table</button>
@@ -177,7 +179,11 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
             </TransactionContentBox>
           </TransactionBox>
           <SaveBox onClick={handleSaveClick}>
-            <SaveText>Save</SaveText>
+            {isFinishClicked ? (
+          <SaveText>Contract Issuance</SaveText>
+          ) : (
+          <SaveText>Save</SaveText>
+          )}
           </SaveBox>
         </TransactionWrapper>
       </Wrapper>
@@ -290,7 +296,7 @@ const SelectBox = styled.div(() => [
 `,
   css`
     width: 300px;
-    height: 500px;
+    height: 320px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -302,3 +308,11 @@ const SelectBox = styled.div(() => [
     z-index: 10;
   `,
 ]);
+
+const CustomContent = () => {
+  return (
+    <div>
+      <img src="/root.png" alt="image"/>
+    </div>
+  );
+};
