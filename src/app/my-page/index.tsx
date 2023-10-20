@@ -25,6 +25,24 @@ export const MyPage = ({ isSuccess }: Props) => {
   const parsedAddress = JSON.parse(localStorageAddress || "{}");
   const walletAddress = parsedAddress[nfcSerialNumber!] || wallet?.getAddress();
 
+  /* function safeStringify(obj: any, spacer = 2): string {
+    const seen = new WeakSet();
+
+    return JSON.stringify(
+      obj,
+      (key, value) => {
+        if (typeof value === "object" && value !== null) {
+          if (seen.has(value)) {
+            return "[Circular]";
+          }
+          seen.add(value);
+        }
+        return value;
+      },
+      spacer
+    );
+  } */
+
   useEffect(() => {
     if (!warpperRef.current) return;
     if (!isSuccess) return;
@@ -51,7 +69,6 @@ export const MyPage = ({ isSuccess }: Props) => {
             <AccountName>Account Name</AccountName>
             <AccountNumber>
               {walletAddress?.slice(0, 5)}...{walletAddress?.slice(-4)}
-              {/* {walletAddress} */}
             </AccountNumber>
           </UserSummaryBox>
           <TokenWrapper>
