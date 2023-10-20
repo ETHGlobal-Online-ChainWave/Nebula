@@ -17,8 +17,8 @@ interface Props {
 }
 
 export const CreateTransaction = ({ isSuccess }: Props) => {
+  const [isSaveClicked, setIsSaveClicked] = useState(false);
   const warpperRef = useRef<HTMLDivElement>(null);
-
   const [currentDate, setCurrentDate] = useState("");
   const [amount, setAmount] = useState(0);
   const [isEditing, setIsEditing] = useState(false);
@@ -98,6 +98,17 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
   e.stopPropagation();
   setIsSelectBoxOpen(false);};
 
+  const handleSaveClick = () => {
+    setIsSaveClicked(true); // Set the state to true when SaveBox is clicked
+  };
+
+   let qrCodeImageSrc = "/qr-code 2.png";
+
+   if (isSaveClicked) {
+    const reWei = amount * 1e18;
+    const eip681Url = `ethereum:0x7F3Caa9da236F65Bb1e89b23dd4d7459b62B9901?value=${reWei}&gas=50000`;
+    qrCodeImageSrc = `https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl=${encodeURIComponent(eip681Url)}`;
+  }
   useEffect(() => {
     if (isSuccess) {
       setCurrentDate(getCurrentDate());
@@ -113,7 +124,9 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
         <button onClick={writeOnTable}>Write on table</button>
         <QrWrapper>
           <QrTitle>Create Qr Code</QrTitle>
-          <QrImage src={QrCodeImage} alt="qr-code-image" />
+          {isSaveClicked ? (
+          <img src={qrCodeImageSrc} alt="qr-code-image" width={200} height={200} />) 
+          : (<img src="/qr-code 2.png" alt="qr-code-image" width={200} height={200} />)}
           <Qrpreview>QR Preview</Qrpreview>
         </QrWrapper>
         <BolderBox>
@@ -163,7 +176,7 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
               <TransactionContent>1hour</TransactionContent>
             </TransactionContentBox>
           </TransactionBox>
-          <SaveBox>
+          <SaveBox onClick={handleSaveClick}>
             <SaveText>Save</SaveText>
           </SaveBox>
         </TransactionWrapper>
