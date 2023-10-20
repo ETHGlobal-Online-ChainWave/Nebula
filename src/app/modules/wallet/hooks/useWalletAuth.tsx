@@ -12,7 +12,7 @@ import { ethers } from "ethers";
 import countContractAbi from "../../contract/counterABI.json";
 
 export function useWalletAuth() {
-  const { setWallet, setProvider, wallet, counterContract, setCounterContract } =
+  const { wallet, setWallet, setProvider, counterContract, setCounterContract } =
     useWalletContext();
   const [isConnecting, setIsConnecting] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
@@ -80,26 +80,24 @@ export function useWalletAuth() {
       const localStorageAddress = window.localStorage.getItem("walletAddress");
 
       if (localStorageAddress) {
-        if (!nfcSerialNumber) {
-          console.log("NFC is not connected");
-          return;
-        }
         const parsedLocalStorageAddress = JSON.parse(localStorageAddress);
-
-        if (!parsedLocalStorageAddress[nfcSerialNumber]) {
-          await instance.connect();
-          parsedLocalStorageAddress[nfcSerialNumber] = await instance.getAddress();
-          window.localStorage.setItem("walletAddress", JSON.stringify(parsedLocalStorageAddress));
+        if (parsedLocalStorageAddress[nfcSerialNumber!]) {
+          // nfcSerialNumber가 로컬스토리지에 있으면 그걸로 연결
+          await instance.connect(parsedLocalStorageAddress[nfcSerialNumber!]);
         } else {
-          await instance.connect(parsedLocalStorageAddress[nfcSerialNumber]);
+          // nfcSerialNumber가 로컬스토리지에 없으면 새로 연결하고 로컬스토리지에 저장
+          await instance.connect();
+          const walletAddress = await instance.getAddress();
+          parsedLocalStorageAddress[nfcSerialNumber!] = walletAddress;
+          window.localStorage.setItem("walletAddress", JSON.stringify(parsedLocalStorageAddress));
         }
-      }
-      /* else {
+      } else {
+        // 로컬스토리지가 비어있으면 nfcSerialNumber로 연결하고 로컬스토리지에 저장
         await instance.connect();
         const walletAddress = await instance.getAddress();
-        window.localStorage.setItem("walletAddress", walletAddress);
-        // await nfc.write(walletAddress);
-      } */
+        const addressObject = { [nfcSerialNumber!]: walletAddress };
+        window.localStorage.setItem("walletAddress", JSON.stringify(addressObject));
+      }
 
       const instanceProvider = new ComethProvider(instance);
 

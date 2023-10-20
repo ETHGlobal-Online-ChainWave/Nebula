@@ -8,7 +8,9 @@ import Image from "next/image";
 import lottie from "lottie-web/build/player/lottie_light";
 import congratulation from "public/congratulation.json";
 import { Database } from "@tableland/sdk";
+import { useWalletAuth } from "../modules/wallet/hooks/useWalletAuth";
 import { Wallet, getDefaultProvider } from "ethers";
+import { useWalletContext } from "../modules/wallet/hooks/useWalletContext";
 
 interface Props {
   isSuccess: boolean;
@@ -18,6 +20,8 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
   const warpperRef = useRef<HTMLDivElement>(null);
 
   const [currentDate, setCurrentDate] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     if (!warpperRef.current) return;
@@ -34,13 +38,18 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
       lottie.destroy();
     };
   }, [warpperRef, isSuccess]);
+  const { wallet } = useWalletContext();
+  const { nfcSerialNumber } = useWalletAuth();
+  const localStorageAddress = window.localStorage.getItem("walletAddress");
+  const parsedAddress = JSON.parse(localStorageAddress || "{}");
+  const walletAddress = parsedAddress[nfcSerialNumber!] || wallet?.getAddress();
 
   const privateKey = process.env.NEXT_PUBLIC_PRIVATE_KEY;
   const alchemyKey = process.env.NEXT_PUBLIC_ALCHEMY_KEY;
 
-  const wallet = privateKey ? new Wallet(privateKey) : null;
+  const walletad = privateKey ? new Wallet(privateKey) : null;
   const provider = getDefaultProvider(`https://polygon-mumbai.g.alchemy.com/v2/${alchemyKey}`);
-  const signer = wallet ? wallet.connect(provider) : null;
+  const signer = walletad ? walletad.connect(provider) : null;
   const db = new Database({ signer: signer ?? undefined });
 
   const tableName: string = "nebula_test_80001_7883";
@@ -49,11 +58,15 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
     type: "text/plain",
   });
 
+  const handleAmountClick = () => {
+  setIsEditing(true);
+  };
+
   const writeOnTable = async () => {
     // Insert a row into the table
     const { meta: insert } = await db
       .prepare(`INSERT INTO ${tableName} (test_text) VALUES (?);`)
-      .bind("test2")
+      .bind("test2", amount)
       .run();
 
     // Wait for transaction finality
@@ -62,6 +75,9 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
     // Perform a read query, requesting all rows from the table
     const { results } = await db.prepare(`SELECT * FROM ${tableName};`).all();
   };
+  const [gasFee, setGasFee] = useState(0);
+
+  const handleAmountBlur = () => {setGasFee(21000);};
 
   const getCurrentDate = () => {
     const today = new Date();
@@ -95,7 +111,7 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
           <TransactionBox>
             <TransactionContentBox>
               <TransactionTitle>Name</TransactionTitle>
-              <TransactionContent>LeeDoYun</TransactionContent>
+              <TransactionContent>{walletAddress?.slice(0, 5)}...{walletAddress?.slice(-4)}{/*{walletAddress}*/}</TransactionContent>
             </TransactionContentBox>
             <TransactionContentBox>
               <TransactionTitle>Date</TransactionTitle>
@@ -103,15 +119,28 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
             </TransactionContentBox>
             <TransactionContentBox>
             <TransactionTitle>Token</TransactionTitle>
-            <TransactionContent>0</TransactionContent>
+            <TransactionContent>Select</TransactionContent>
             </TransactionContentBox>
             <TransactionContentBox>
-              <TransactionTitle>Amount</TransactionTitle>
-              <TransactionContent>0</TransactionContent>
+            <TransactionTitle>Amount</TransactionTitle>
+            {isEditing ? (
+            <input
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(Number(e.target.value))}
+              onBlur={handleAmountBlur} // amount 입력이 완료될 때 gasFee를 업데이트
+              style={{
+                border: 'none',
+                outline: 'none',
+                backgroundColor: 'transparent',
+                textAlign: 'right',
+                width: '50px'
+              }}
+            />) : (<div onClick={handleAmountClick}>{amount}</div>)}
             </TransactionContentBox>
             <TransactionContentBox>
-              <TransactionTitle>Gas Fee</TransactionTitle>
-              <TransactionContent>0</TransactionContent>
+              <TransactionTitle>Gas Fee limit</TransactionTitle>
+              <TransactionContent>{gasFee}</TransactionContent>
             </TransactionContentBox>
             <TransactionContentBox>
               <TransactionTitle>Validity</TransactionTitle>
