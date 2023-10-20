@@ -95,7 +95,7 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
           <TransactionBox>
             <TransactionContentBox>
               <TransactionTitle>Name</TransactionTitle>
-              <TransactionContent>0</TransactionContent>
+              <TransactionContent>LeeDoYun</TransactionContent>
             </TransactionContentBox>
             <TransactionContentBox>
               <TransactionTitle>Date</TransactionTitle>
