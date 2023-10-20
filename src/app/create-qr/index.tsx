@@ -87,6 +87,17 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
     return `${year}/${month}/${day}`;
   };
 
+  const [isSelectBoxOpen, setIsSelectBoxOpen] = useState(false);
+  const [isTokenSelected, setIsTokenSelected] = useState(false);
+
+  const handleSelectClick = () => {
+  setIsSelectBoxOpen(true);
+  setIsTokenSelected(true); };
+
+  const handleSelectBoxClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  e.stopPropagation();
+  setIsSelectBoxOpen(false);};
+
   useEffect(() => {
     if (isSuccess) {
       setCurrentDate(getCurrentDate());
@@ -95,6 +106,9 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
 
   return (
     <>
+    {isSelectBoxOpen && (
+        <SelectBox onClick={handleSelectBoxClick}>내용</SelectBox>
+      )}
       <Wrapper>
         <button onClick={writeOnTable}>Write on table</button>
         <QrWrapper>
@@ -119,7 +133,9 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
             </TransactionContentBox>
             <TransactionContentBox>
             <TransactionTitle>Token</TransactionTitle>
-            <TransactionContent>Select</TransactionContent>
+             {isTokenSelected ? (
+              <div>Ethereum</div>
+                ) : (<div onClick={handleSelectClick}>Select</div>)}
             </TransactionContentBox>
             <TransactionContentBox>
             <TransactionTitle>Amount</TransactionTitle>
@@ -205,7 +221,7 @@ absolute top-[-6px] right-[-8px] w-16 h-16 rounded-full bg-gray8
 `;
 
 const TransactionWrapper = tw.div`
-  flex-center flex-col  h-380 rounded-b-20
+  flex-center flex-col  h-400 rounded-b-20
   bg-[#282833] w-328 p-24
 `;
 
@@ -216,7 +232,7 @@ const TransactionContentBox = tw.div`
 
 const TransactionBox = styled.div(() => [
   tw`
-    flex-center flex-col w-full h-280
+    flex-center flex-col w-full h-320
     bg-gray2 rounded-20 py-16 px-20
 `,
   css`
@@ -253,3 +269,23 @@ const TransactionTitle = tw.div`
 const TransactionContent = tw.div`
   font-r-12 text-gray3
 `;
+
+const SelectBox = styled.div(() => [
+  tw`
+    flex-center flex-col
+    bg-gray2 rounded-20 py-16 px-20
+`,
+  css`
+    width: 300px;
+    height: 500px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 30px;
+    border: 1px solid #cfcffc5c;
+    background: rgba(78, 78, 97, 0.2);
+    backdrop-filter: blur(5px);
+    z-index: 10;
+  `,
+]);
