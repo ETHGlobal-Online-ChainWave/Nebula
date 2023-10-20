@@ -65,13 +65,13 @@ export const SignUpPage = ({
         <Title>Create Wallet</Title>
         {/* <div>{JSON.stringify(nfcMessage?.records)}</div> */}
         <CardImage src={CreditCardImage} alt="credit-card-image" />
-        <div className="text-white font-r-14">
+        <Content>
           {isNfcConnecting
             ? "Put your card on the back"
             : isConnected
-            ? "Success"
+            ? "Success!"
             : "Reading the card information"}
-        </div>
+        </Content>
         <LottieWrapper ref={warpperRef} />
       </Wrapper>
       <FooterBarBox>
@@ -89,6 +89,10 @@ const Wrapper = tw.div`
 
 const Title = tw.div`
     font-r-16
+`;
+
+const Content = tw.div`
+    font-r-14 text-white
 `;
 
 const CardImage = tw(Image)`
