@@ -1,7 +1,7 @@
 "use client";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import React from "react";
-import { MyPage } from ".";
+import { MyCard } from ".";
 import ErrorPage from "../components/error";
 import tw from "twin.macro";
 
@@ -14,16 +14,12 @@ function Page() {
       {isMD ? (
         <ErrorPage />
       ) : (
-        <Wrapper>
-          <MyPage isSuccess={isSuccess} />
-        </Wrapper>
+        <>
+          <MyCard isSuccess={isSuccess} />
+        </>
       )}
     </>
   );
 }
-
-const Wrapper = tw.div`
-    flex
-`;
 
 export default Page;

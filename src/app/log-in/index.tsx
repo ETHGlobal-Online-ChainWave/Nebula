@@ -7,17 +7,22 @@ import tw from "twin.macro";
 import Image from "next/image";
 import lottie from "lottie-web/build/player/lottie_light";
 import congratulation from "public/congratulation.json";
+import { useRouter } from "next/navigation";
 
 interface Props {
-  isSuccess: boolean;
+  isConnected: boolean;
+  isNfcConnecting: boolean;
+  handleNfcReading: () => Promise<void>;
 }
 
-export const LogInPage = ({ isSuccess }: Props) => {
+export const LogInPage = ({ isConnected, isNfcConnecting, handleNfcReading }: Props) => {
+  const router = useRouter();
   const warpperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!warpperRef.current) return;
-    if (!isSuccess) return;
+    if (!isConnected) return;
+
     lottie.loadAnimation({
       container: warpperRef.current,
       renderer: "svg",
@@ -25,31 +30,46 @@ export const LogInPage = ({ isSuccess }: Props) => {
       autoplay: true,
       animationData: congratulation,
     });
+    router.push("/my-page");
 
     return () => {
       lottie.destroy();
     };
-  }, [warpperRef, isSuccess]);
+  }, [warpperRef, isConnected]);
+
+  useEffect(() => {
+    handleNfcReading();
+  }, []);
 
   return (
     <>
       <Wrapper>
+        <Title>Log in by Card</Title>
         <CardImage src={CreditCardImage} alt="credit-card-image" />
+        <Content>{isNfcConnecting && "Put your card on the back"}</Content>
         <LottieWrapper ref={warpperRef} />
       </Wrapper>
 
       <FooterBarBox>
-        <FooterBar isBackBoard={true} isLoading={true} />
+        <FooterBar isBackBoard={true} isLoading={!isConnected} />
       </FooterBarBox>
     </>
   );
 };
 
 const Wrapper = tw.div`
-    flex-center flex-col
+flex-center flex-col text-gray3
+pt-32 gap-60
+relative
 
 `;
 
+const Title = tw.div`
+    font-r-16
+    `;
+const Content = tw.div`
+    font-r-14 text-white
+    `;
 const CardImage = tw(Image)`
     max-w-270
     `;

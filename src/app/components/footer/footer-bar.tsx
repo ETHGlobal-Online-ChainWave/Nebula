@@ -2,11 +2,12 @@
 import tw, { css, styled } from "twin.macro";
 import FooterBarBackGround from "public/footer-bar-bg.png";
 import Image from "next/image";
-import { IconCalendar, IconCredit, IconHome, IconPlus } from "../icons";
+import { IconCalendar, IconCredit, IconHome, IconMoney, IconPlus } from "../icons";
 import QrCodeImage from "public/qr-code.png";
 import loading from "public/loading-circle.json";
 import lottie from "lottie-web/build/player/lottie_light";
 import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 
 interface Props {
   isBackBoard?: boolean;
@@ -15,6 +16,7 @@ interface Props {
 
 function FooterBar({ isBackBoard, isLoading }: Props) {
   const warpperRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (!warpperRef.current || !isLoading) return;
@@ -39,15 +41,25 @@ function FooterBar({ isBackBoard, isLoading }: Props) {
       <BarBackground src={FooterBarBackGround} alt="image" />
       <IconButtonBox>
         <LeftIconBox>
-          <IconHome />
-          <IconCalendar />
+          <div onClick={() => router.push("/my-page")}>
+            <IconHome />
+          </div>
+          <div onClick={() => router.push("/read-qr")}>
+            <IconMoney />
+          </div>
         </LeftIconBox>
         <QrButtonBox>
-          <Qrcode src={QrCodeImage} alt="qr-code-image" />
+          <div onClick={() => router.push("/my-transaction")}>
+            <Qrcode src={QrCodeImage} alt="qr-code-image" />
+          </div>
         </QrButtonBox>
         <RightIconBox>
-          <IconPlus />
-          <IconCredit />
+          <div onClick={() => router.push("/create-qr")}>
+            <IconPlus />
+          </div>
+          <div onClick={() => router.push("/my-card")}>
+            <IconCredit />
+          </div>
         </RightIconBox>
       </IconButtonBox>
     </FooterWrapper>
@@ -62,6 +74,7 @@ interface FooterWrapperProps {
 
 const FooterWrapper = styled.div<FooterWrapperProps>(({ isBackBoard }) => [
   tw`
+ 
   relative pb-15 flex-center 
 `,
   isBackBoard && tw`pt-100 bg-gray7`,
@@ -80,9 +93,16 @@ const IconButtonBox = tw.div`
   w-330 h-55 relative 
 `;
 
-const LeftIconBox = tw.div`
+const LeftIconBox = styled.div(() => [
+  tw`
   absolute top-18 left-24 flex gap-40
-`;
+`,
+  css`
+    svg {
+      cursor: pointer;
+    }
+  `,
+]);
 
 const QrButtonBox = styled.div(() => [
   tw`
@@ -95,12 +115,19 @@ const QrButtonBox = styled.div(() => [
 ]);
 
 const Qrcode = tw(Image)`
-    w-27 h-27 
+    w-27 h-27 clickable
 `;
 
-const RightIconBox = tw.div`
+const RightIconBox = styled.div(() => [
+  tw`
   absolute top-18 right-24 flex gap-40
-`;
+`,
+  css`
+    svg {
+      cursor: pointer;
+    }
+  `,
+]);
 
 const LottieWrapper = tw.div`
   w-20 h-20 flex-center absolute absolute-center

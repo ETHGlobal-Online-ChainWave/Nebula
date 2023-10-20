@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import tw, { css, styled } from "twin.macro";
 
 import LogoImg from "~/assets/images/logo.png";
@@ -6,7 +7,7 @@ import LogoImg from "~/assets/images/logo.png";
 function ErrorPage() {
   return (
     <Wrapper>
-      <ErrorText>Please use a Mobile device to access this Service.</ErrorText>
+      <ErrorText>{"Please use a Mobile device to access this Service."}</ErrorText>
     </Wrapper>
   );
 }

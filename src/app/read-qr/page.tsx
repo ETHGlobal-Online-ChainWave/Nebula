@@ -1,7 +1,7 @@
 "use client";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import React from "react";
-import { MyPage } from ".";
+import { ReadQrcode } from ".";
 import ErrorPage from "../components/error";
 import tw from "twin.macro";
 
@@ -15,7 +15,7 @@ function Page() {
         <ErrorPage />
       ) : (
         <Wrapper>
-          <MyPage isSuccess={isSuccess} />
+          <ReadQrcode isSuccess={isSuccess} />
         </Wrapper>
       )}
     </>
@@ -23,7 +23,7 @@ function Page() {
 }
 
 const Wrapper = tw.div`
-    flex
+    
 `;
 
 export default Page;
