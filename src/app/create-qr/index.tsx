@@ -16,12 +16,15 @@ interface Props {
 }
 
 export const CreateTransaction = ({ isSuccess }: Props) => {
+  const { wallet } = useWalletContext();
   const [isSaveClicked, setIsSaveClicked] = useState(false);
   const warpperRef = useRef<HTMLDivElement>(null);
   const [currentDate, setCurrentDate] = useState("");
   const [amount, setAmount] = useState(0);
   const [isEditing, setIsEditing] = useState(false);
   const [isFinishClicked, setIsFinishClicked] = useState(false);
+
+  const walletAddress = wallet?.getAddress();
 
   useEffect(() => {
     if (!warpperRef.current) return;
@@ -38,11 +41,6 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
       lottie.destroy();
     };
   }, [warpperRef, isSuccess]);
-  const { wallet } = useWalletContext();
-  const { nfcSerialNumber } = useWalletAuth();
-  const localStorageAddress = window.localStorage.getItem("walletAddress");
-  const parsedAddress = JSON.parse(localStorageAddress || "{}");
-  const walletAddress = parsedAddress[nfcSerialNumber!] || wallet?.getAddress();
 
   const privateKey = process.env.NEXT_PUBLIC_PRIVATE_KEY;
   const alchemyKey = process.env.NEXT_PUBLIC_ALCHEMY_KEY;
@@ -107,7 +105,7 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
 
    if (isSaveClicked) {
     const reWei = amount * 1e18;
-    const eip681Url = `ethereum:0x7F3Caa9da236F65Bb1e89b23dd4d7459b62B9901?value=${reWei}&gas=50000`;
+    const eip681Url = `ethereum:${walletAddress}?value=${reWei}&gas=50000`;
     qrCodeImageSrc = `https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl=${encodeURIComponent(eip681Url)}`;
   }
   useEffect(() => {
