@@ -79,7 +79,7 @@ export const MyTransaction = ({ isSuccess }: Props) => {
               <TransactionBox>
                 <TransactionContentBox>
                   <TransactionTitle>Name</TransactionTitle>
-                  <TransactionContent>{sliceAddress(data.receiveAddress)}</TransactionContent>
+                  <TransactionContent>{data.receiveAddress}</TransactionContent>
                 </TransactionContentBox>
                 <TransactionContentBox>
                   <TransactionTitle>Date</TransactionTitle>
