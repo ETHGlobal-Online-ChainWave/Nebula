@@ -37,9 +37,9 @@ export function useWalletAuth() {
         apiKey,
       });
 
-      const walletScrollAdaptor = new ConnectAdaptor({
+      /* const walletScrollAdaptor = new ConnectAdaptor({
         chainId: 534351,
-      });
+      }); */
 
       const instance = new ComethWallet({
         authAdapter: walletAdaptor,
