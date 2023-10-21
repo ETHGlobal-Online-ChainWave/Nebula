@@ -87,7 +87,7 @@ export const MyTransaction = ({ isSuccess }: Props) => {
                 </TransactionContentBox>
                 <TransactionContentBox>
                   <TransactionTitle>Amount</TransactionTitle>
-                  <TransactionContent>{data.amount}</TransactionContent>
+                  <TransactionContent>{data.amount / 1e18}</TransactionContent>
                 </TransactionContentBox>
                 <TransactionContentBox>
                   <TransactionTitle>Gas Limit</TransactionTitle>
