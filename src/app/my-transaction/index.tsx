@@ -9,6 +9,7 @@ import lottie from "lottie-web/build/player/lottie_light";
 import congratulation from "public/congratulation.json";
 import { Database } from "@tableland/sdk";
 import { ConnectAdaptor, SupportedNetworks } from "@cometh/connect-sdk";
+import { useWalletContext } from "../modules/wallet/hooks/useWalletContext";
 
 interface Props {
   isSuccess: boolean;
@@ -16,7 +17,7 @@ interface Props {
 
 interface QrCodeData {
   qrcode: string;
-  receiveAddress: string;
+  receiveaddress: string;
   date: string;
   token: string;
   amount: number;
@@ -26,6 +27,7 @@ interface QrCodeData {
 
 export const MyTransaction = ({ isSuccess }: Props) => {
   const [tablelandData, setTablelandData] = useState<QrCodeData[]>([]);
+  const { wallet } = useWalletContext();
   const warpperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -47,7 +49,9 @@ export const MyTransaction = ({ isSuccess }: Props) => {
   const tableName: string = "neblula_one_80001_8032";
   const db = new Database();
   const readOnTable = async () => {
-    const { results } = await db.prepare(`SELECT * FROM ${tableName};`).all();
+    const { results } = await db
+      .prepare(`SELECT * FROM ${tableName} WHERE receiveaddress = '${wallet?.getAddress()}'`)
+      .all();
     setTablelandData(results as QrCodeData[]);
     console.log(results);
   };
@@ -56,7 +60,7 @@ export const MyTransaction = ({ isSuccess }: Props) => {
     readOnTable();
   }, []);
 
-  const sliceAddress = (address: string) => {
+  const sliceaddress = (address: string) => {
     return address.slice(0, 6) + "..." + address.slice(-4);
   };
 
@@ -64,47 +68,55 @@ export const MyTransaction = ({ isSuccess }: Props) => {
     <>
       <Wrapper>
         {/* <button onClick={readOnTable}>read</button> */}
-        {tablelandData.map((data, index) => (
-          <div key={index}>
-            <QrWrapper>
-              <QrTitle>Transaction Qr Code</QrTitle>
-              <img src={data.qrcode} alt="qr-code-image" width={200} height={200} />
-            </QrWrapper>
-            <BolderBox>
-              <LeftCircle />
-              <DotBolder />
-              <RightCircle />
-            </BolderBox>
-            <TransactionWrapper>
-              <TransactionBox>
-                <TransactionContentBox>
-                  <TransactionTitle>Name</TransactionTitle>
-                  <TransactionContent>{data.receiveAddress}</TransactionContent>
-                </TransactionContentBox>
-                <TransactionContentBox>
-                  <TransactionTitle>Date</TransactionTitle>
-                  <TransactionContent>{data.date}</TransactionContent>
-                </TransactionContentBox>
-                <TransactionContentBox>
-                  <TransactionTitle>Token</TransactionTitle>
-                  <TransactionContent>{data.token}</TransactionContent>
-                </TransactionContentBox>
-                <TransactionContentBox>
-                  <TransactionTitle>Amount</TransactionTitle>
-                  <TransactionContent>{data.amount / 1e18}</TransactionContent>
-                </TransactionContentBox>
-                <TransactionContentBox>
-                  <TransactionTitle>Gas Limit</TransactionTitle>
-                  <TransactionContent>{data.gaslimit}</TransactionContent>
-                </TransactionContentBox>
-                <TransactionContentBox>
-                  <TransactionTitle>Validity</TransactionTitle>
-                  <TransactionContent>{data.validhour}hour</TransactionContent>
-                </TransactionContentBox>
-              </TransactionBox>
-            </TransactionWrapper>
-          </div>
-        ))}
+        {tablelandData.length > 0 ? (
+          tablelandData.map((data, index) => (
+            <div key={index}>
+              <QrWrapper>
+                <QrTitle>Transaction Qr Code</QrTitle>
+                <img src={data.qrcode} alt="qr-code-image" width={200} height={200} />
+              </QrWrapper>
+              <BolderBox>
+                <LeftCircle />
+                <DotBolder />
+                <RightCircle />
+              </BolderBox>
+              <TransactionWrapper>
+                <TransactionBox>
+                  <TransactionContentBox>
+                    <TransactionTitle>Name</TransactionTitle>
+                    <TransactionContent>
+                      {data.receiveaddress
+                        ? `${data.receiveaddress.slice(0, 7)}...${data.receiveaddress.slice(-6)}`
+                        : ""}
+                    </TransactionContent>
+                  </TransactionContentBox>
+                  <TransactionContentBox>
+                    <TransactionTitle>Date</TransactionTitle>
+                    <TransactionContent>{data.date}</TransactionContent>
+                  </TransactionContentBox>
+                  <TransactionContentBox>
+                    <TransactionTitle>Token</TransactionTitle>
+                    <TransactionContent>{data.token}</TransactionContent>
+                  </TransactionContentBox>
+                  <TransactionContentBox>
+                    <TransactionTitle>Amount</TransactionTitle>
+                    <TransactionContent>{data.amount / 1e18}</TransactionContent>
+                  </TransactionContentBox>
+                  <TransactionContentBox>
+                    <TransactionTitle>Gas Limit</TransactionTitle>
+                    <TransactionContent>{data.gaslimit}</TransactionContent>
+                  </TransactionContentBox>
+                  <TransactionContentBox>
+                    <TransactionTitle>Validity</TransactionTitle>
+                    <TransactionContent>{data.validhour}hour</TransactionContent>
+                  </TransactionContentBox>
+                </TransactionBox>
+              </TransactionWrapper>
+            </div>
+          ))
+        ) : (
+          <div className="font-r-16 text-white mt-10">No QR code has been created</div>
+        )}
       </Wrapper>
 
       <FooterBarBox>
