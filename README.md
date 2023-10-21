@@ -1,7 +1,7 @@
 ![nebula](https://github.com/ETHGlobal-Online-ChainWave/Nebula/assets/59263564/0d16fbd6-351b-4f98-8144-02c1dc33b6a1)
-/youtu.be/BiPv0tLxyPM?si=PbNzWvl_Dlev0l_w
-# NeBula Overview
 
+# NeBula Overview
+https://youtu.be/BiPv0tLxyPM?si=PbNzWvl_Dlev0l_w
 We have developed a system that leverages NFC for wallet creation and login, as well as QR codes for transaction generation and approval. Both NFC tagging and QR codes offer convenient solutions for mobile users, and we've integrated these technologies into the blockchain.
 
 The reason behind our creation of NFC card wallets stems from the shortcomings of existing wallet systems. Custodial wallets often suffer from the Trusted Entity problem, and Key Management Service (KMS) wallets share similar issues. Mobile wallets typically require app installation and setup, and hardware wallets can be expensive and have limited token support.
