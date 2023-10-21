@@ -16,6 +16,7 @@ import MainPageImageLeft from "public/main-page-left.png";
 import MainPageImageRight from "public/main-page-right.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import NebulaLogoImage from "public/nebula-logo.png";
 
 export default function App() {
   const {
@@ -40,6 +41,7 @@ export default function App() {
       ) : (
         <>
           <LogoBox>
+            <LogoImage src={NebulaLogoImage} alt="logo" />
             <LogoTitle>NEBULA</LogoTitle>
           </LogoBox>
           <ImgBox>
@@ -63,7 +65,11 @@ export default function App() {
 }
 
 const LogoBox = tw.div`
-  w-full h-100 flex-center
+  w-full h-100 flex-center flex gap-16
+`;
+
+const LogoImage = tw(Image)`
+  w-60
 `;
 
 const LogoTitle = tw.div`

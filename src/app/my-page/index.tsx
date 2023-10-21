@@ -10,6 +10,8 @@ import congratulation from "public/congratulation.json";
 import EllipseImage from "public/Ellipse.png";
 import EthLogoImage from "public/eth-logo.png";
 import UsdtLogoImage from "public/usdt-logo.png";
+import BnbLogoImage from "public/bnb-logo.png";
+import MaticLogoImage from "public/matic-logo.png";
 import { useWalletAuth } from "../modules/wallet/hooks/useWalletAuth";
 import { useWalletContext } from "../modules/wallet/hooks/useWalletContext";
 
@@ -75,17 +77,17 @@ export const MyPage = ({ isSuccess }: Props) => {
             <TokenBox>
               <TokenTopBar1 />
               <TokenBoxTitle>Token Type</TokenBoxTitle>
-              <TokenBoxContent>0</TokenBoxContent>
+              <TokenBoxContent>4</TokenBoxContent>
             </TokenBox>
             <TokenBox>
               <TokenTopBar2 />
               <TokenBoxTitle>Highest Token</TokenBoxTitle>
-              <TokenBoxContent>0</TokenBoxContent>
+              <TokenBoxContent>ETH</TokenBoxContent>
             </TokenBox>
             <TokenBox>
               <TokenTopBar3 />
               <TokenBoxTitle>Lowest Token</TokenBoxTitle>
-              <TokenBoxContent>0</TokenBoxContent>
+              <TokenBoxContent>MATIC</TokenBoxContent>
             </TokenBox>
           </TokenWrapper>
         </TopWrapper>
@@ -96,22 +98,22 @@ export const MyPage = ({ isSuccess }: Props) => {
             <TokenBalanceBox>
               <TokenImage src={EthLogoImage} alt="credit-card-image" />
               <TokenName>Ethereum</TokenName>
-              <TokenBalance>0 USD</TokenBalance>
+              <TokenBalance>321.21 USD</TokenBalance>
             </TokenBalanceBox>
             <TokenBalanceBox>
               <TokenImage src={UsdtLogoImage} alt="credit-card-image" />
               <TokenName>Tether</TokenName>
-              <TokenBalance>0 USD</TokenBalance>
+              <TokenBalance>142.12 USD</TokenBalance>
             </TokenBalanceBox>
             <TokenBalanceBox>
-              <TokenImage src={EthLogoImage} alt="credit-card-image" />
+              <TokenImage src={BnbLogoImage} alt="credit-card-image" />
               <TokenName>Token Name</TokenName>
-              <TokenBalance>0 USD</TokenBalance>
+              <TokenBalance>23.12 USD</TokenBalance>
             </TokenBalanceBox>
             <TokenBalanceBox>
-              <TokenImage src={EthLogoImage} alt="credit-card-image" />
+              <TokenImage src={MaticLogoImage} alt="credit-card-image" />
               <TokenName>Token Name</TokenName>
-              <TokenBalance>0 USD</TokenBalance>
+              <TokenBalance>2.45 USD</TokenBalance>
             </TokenBalanceBox>
           </TokenBalanceWrapper>
         </BottomWrapper>
