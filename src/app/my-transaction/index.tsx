@@ -8,6 +8,7 @@ import Image from "next/image";
 import lottie from "lottie-web/build/player/lottie_light";
 import congratulation from "public/congratulation.json";
 import { Database } from "@tableland/sdk";
+import { ConnectAdaptor, SupportedNetworks } from "@cometh/connect-sdk";
 
 interface Props {
   isSuccess: boolean;
@@ -38,6 +39,7 @@ export const MyTransaction = ({ isSuccess }: Props) => {
     const { results } = await db.prepare(`SELECT * FROM ${tableName};`).all();
     console.log(results);
   };
+
   return (
     <>
       <Wrapper>
