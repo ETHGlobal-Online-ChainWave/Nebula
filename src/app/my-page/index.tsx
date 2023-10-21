@@ -10,6 +10,7 @@ import congratulation from "public/congratulation.json";
 import EllipseImage from "public/Ellipse.png";
 import EthLogoImage from "public/eth-logo.png";
 import UsdtLogoImage from "public/usdt-logo.png";
+import { useWalletAuth } from "../modules/wallet/hooks/useWalletAuth";
 import { useWalletContext } from "../modules/wallet/hooks/useWalletContext";
 
 interface Props {
@@ -19,7 +20,28 @@ interface Props {
 export const MyPage = ({ isSuccess }: Props) => {
   const warpperRef = useRef<HTMLDivElement>(null);
   const { wallet } = useWalletContext();
-  const walletAddress = wallet?.getAddress();
+  const { nfcSerialNumber } = useWalletAuth();
+  const localStorageAddress = window.localStorage.getItem("walletAddress");
+  const parsedAddress = JSON.parse(localStorageAddress || "{}");
+  const walletAddress = parsedAddress[nfcSerialNumber!] || wallet?.getAddress();
+
+  /* function safeStringify(obj: any, spacer = 2): string {
+    const seen = new WeakSet();
+
+    return JSON.stringify(
+      obj,
+      (key, value) => {
+        if (typeof value === "object" && value !== null) {
+          if (seen.has(value)) {
+            return "[Circular]";
+          }
+          seen.add(value);
+        }
+        return value;
+      },
+      spacer
+    );
+  } */
 
   useEffect(() => {
     if (!warpperRef.current) return;
@@ -103,19 +125,11 @@ export const MyPage = ({ isSuccess }: Props) => {
 };
 
 const Wrapper = styled.div(() => [
-  tw`
-    flex items-center flex-col w-full h-full
-    overflow-y-auto
-    flex-1
-    min-h-full
-    relative
-`,
+  tw`relative flex flex-col items-center flex-1 w-full h-full min-h-full overflow-y-auto `,
 ]);
 
 const TopWrapper = styled.div(() => [
-  tw`
-     w-full flex-col bg-gray7 py-25 
-    `,
+  tw`flex-col w-full bg-gray7 py-25`,
   css`
     border-radius: 0px 0px 24px 24px;
   `,
@@ -157,14 +171,7 @@ const TokenWrapper = tw.div`
   `;
 
 const TokenBox = styled.div(() => [
-  tw`
-  relative
-  flex-center flex-col 
-  text-center
-  bg-gray8 rounded-10
-  py-16 px-18
-  w-104 h-68
-  `,
+  tw`relative flex-col py-16 text-center flex-center bg-gray8 rounded-10 px-18 w-104 h-68`,
   css`
     border-radius: 16px;
     border: 1px solid #cfcffc;
@@ -190,12 +197,7 @@ const TokenBoxContent = tw.div`
   font-sb-14 text-white
   `;
 
-const BottomWrapper = styled.div(() => [
-  tw`
-    flex items-center flex-col w-full
-    gap-10
-`,
-]);
+const BottomWrapper = styled.div(() => [tw`flex flex-col items-center w-full gap-10 `]);
 
 const TokenBalanceWrapper = tw.div`
     flex flex-col items-center w-full h-full
