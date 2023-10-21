@@ -31,7 +31,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "withTwin.js"
-  ],
+, "src/app/create-qr/tokenSelector"  ],
   "exclude": ["node_modules"],
 
   "types": ["types"]
