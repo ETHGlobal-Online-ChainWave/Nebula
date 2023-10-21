@@ -12,10 +12,10 @@ import { useRouter } from "next/navigation";
 interface Props {
   isConnected: boolean;
   isNfcConnecting: boolean;
-  // handleNfcReading: () => Promise<void>;
+  handleNfcReading: () => Promise<void>;
 }
 
-export const LogInPage = ({ isConnected, isNfcConnecting }: Props) => {
+export const LogInPage = ({ isConnected, isNfcConnecting, handleNfcReading }: Props) => {
   const router = useRouter();
   const warpperRef = useRef<HTMLDivElement>(null);
 
@@ -39,9 +39,9 @@ export const LogInPage = ({ isConnected, isNfcConnecting }: Props) => {
     };
   }, [warpperRef, isConnected]);
 
-  /* useEffect(() => {
+  useEffect(() => {
     handleNfcReading();
-  }, []); */
+  }, []);
 
   return (
     <>

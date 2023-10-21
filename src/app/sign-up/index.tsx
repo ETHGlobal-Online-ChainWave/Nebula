@@ -17,7 +17,7 @@ interface Props {
   nfcSerialNumber: string | null;
   isNfcConnecting: boolean;
   connect: () => Promise<void>;
-  // handleNfcReading: () => Promise<void>;
+  handleNfcReading: () => Promise<void>;
   wallet: ComethWallet | null;
 }
 
@@ -27,7 +27,7 @@ export const SignUpPage = ({
   isConnected,
   isNfcConnecting,
   nfcSerialNumber,
-  // handleNfcReading,
+  handleNfcReading,
   connect,
   wallet,
 }: Props) => {
@@ -53,9 +53,9 @@ export const SignUpPage = ({
     };
   }, [warpperRef, isConnected]);
 
-  // useEffect(() => {
-  //   handleNfcReading();
-  // }, []);
+  useEffect(() => {
+    handleNfcReading();
+  }, []);
 
   return (
     <>

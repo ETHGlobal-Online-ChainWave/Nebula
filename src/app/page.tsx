@@ -53,14 +53,12 @@ export default function App() {
               text="Get Started"
               isHighlight={true}
               onClick={() => {
-                handleNfcReading();
                 router.push("/sign-up");
               }}
             />
             <ButtonSmall
               text="I Have an Wallet"
               onClick={() => {
-                handleNfcReading();
                 router.push("/log-in");
               }}
             />

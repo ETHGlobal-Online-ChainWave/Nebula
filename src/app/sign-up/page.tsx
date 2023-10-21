@@ -30,7 +30,7 @@ function Page() {
             isConnected={isConnected}
             isNfcConnecting={isNfcConnecting}
             nfcSerialNumber={nfcSerialNumber}
-            // handleNfcReading={handleNfcReading}
+            handleNfcReading={handleNfcReading}
             connect={connect}
             connectionError={connectionError}
             wallet={wallet}
