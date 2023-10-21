@@ -15,6 +15,7 @@ import {
   ComethProvider,
   ComethWallet,
   ConnectAdaptor,
+  MetaTransactionData,
   RelayTransactionResponse,
   SupportedNetworks,
 } from "@cometh/connect-sdk";
@@ -141,9 +142,9 @@ export const ReadQrcode = ({ isSuccess }: Props) => {
       // const txResponse = await tx.wait();
       // console.log(txResponse);
 
-      const txValues = {
+      const txValues: MetaTransactionData = {
         to: "0x4adfb048858346ea1b49361eedb036ad31ee0e54",
-        value: "0x00",
+        value: "0.01",
         data: "0x",
       };
       const txPending = await wallet?.sendTransaction(txValues);
@@ -165,6 +166,7 @@ export const ReadQrcode = ({ isSuccess }: Props) => {
       {data == "" ? (
         <Wrapper>
           <Title>Scan</Title>
+          <ButtonSmall text="Send" isLoading={isTransactionLoading} onClick={handleSendClick} />
           <>
             <QrReader
               constraints={{ facingMode: "environment" }}
