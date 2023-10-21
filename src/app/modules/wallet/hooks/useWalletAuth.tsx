@@ -37,6 +37,10 @@ export function useWalletAuth() {
         apiKey,
       });
 
+      const walletScrollAdaptor = new ConnectAdaptor({
+        chainId: 534351,
+      });
+
       const instance = new ComethWallet({
         authAdapter: walletAdaptor,
         apiKey,
@@ -67,6 +71,7 @@ export function useWalletAuth() {
       const instanceProvider = new ComethProvider(instance);
 
       // const contract = new ethers.Contract(MATIC_ADDRESS, TOKEN_ABI, instanceProvider.getSigner());
+
       const contract = new ethers.Contract(
         COUNTER_CONTRACT_ADDRESS,
         COUNTER_ABI,
