@@ -34,6 +34,7 @@ export const ReadQrcode = ({ isSuccess }: Props) => {
 
   const [isSaveClicked, setIsSaveClicked] = useState(false);
   const [isTransactionLoading, setIsTransactionLoading] = useState(false);
+  const [transactionResponse, setTransactionResponse] = useState<any>("");
 
   const [count, setCount] = useState("");
 
@@ -134,6 +135,11 @@ export const ReadQrcode = ({ isSuccess }: Props) => {
 
     try {
       if (!wallet) throw new Error("No wallet instance");
+
+      const tx: RelayTransactionResponse = await contract!.count();
+      const txResponse = await tx.wait();
+      console.log(txResponse);
+
       // const tx: RelayTransactionResponse = await contract!.transferFrom(
       //   wallet?.getAddress(),
       //   "0x4adfb048858346ea1b49361eedb036ad31ee0e54",
@@ -142,16 +148,15 @@ export const ReadQrcode = ({ isSuccess }: Props) => {
       // const txResponse = await tx.wait();
       // console.log(txResponse);
 
-      const txValues: MetaTransactionData = {
-        to: "0x4adfb048858346ea1b49361eedb036ad31ee0e54",
-        value: "0.01",
-        data: "0x",
-      };
-      const txPending = await wallet?.sendTransaction(txValues);
-      await txPending?.wait();
-
-      alert("success");
-      setCount("success");
+      // const txValues: MetaTransactionData = {
+      //   to: "0x4adfb048858346ea1b49361eedb036ad31ee0e54",
+      //   value: "0.01",
+      //   data: "0x",
+      // };
+      // const txPending = await wallet?.sendTransaction(txValues);
+      // await txPending?.wait();
+      setIsTransactionLoading(false);
+      setTransactionResponse(txResponse);
     } catch (e) {
       alert(e);
       console.log("Error:", e);
@@ -159,6 +164,10 @@ export const ReadQrcode = ({ isSuccess }: Props) => {
       setIsTransactionLoading(false);
     }
     setIsTransactionLoading(false);
+  };
+
+  const sliceUrl = (url: string) => {
+    return url.slice(0, 20) + "..." + url.slice(-5);
   };
 
   return (
@@ -225,7 +234,16 @@ export const ReadQrcode = ({ isSuccess }: Props) => {
             </TransactionBox>
 
             <ButtonSmall text="Send" isLoading={isTransactionLoading} onClick={handleSendClick} />
-            {/* <div>{count}</div> */}
+            {transactionResponse && (
+              <SuccessBox>
+                <SuccessTitle>Transaction success! </SuccessTitle>
+                <SuccessUrl>
+                  {sliceUrl(
+                    `https://mumbai.polygonscan.com/tx/${transactionResponse?.transactionHash}`
+                  )}
+                </SuccessUrl>
+              </SuccessBox>
+            )}
           </TransactionWrapper>
         </Wrapper2>
       )}
@@ -347,4 +365,18 @@ const SaveBox = styled.div(() => [
 
 const SaveText = tw.div`
   text-white font-bold
+`;
+
+const SuccessBox = tw.div`
+  flex-center flex-col w-full h-50
+  bg-gray2 rounded-20 py-16 px-20
+  gap-4
+`;
+
+const SuccessTitle = tw.div`
+  text-white font-bold
+`;
+
+const SuccessUrl = tw.div`
+  text-white font-bold font-r-12 underline
 `;

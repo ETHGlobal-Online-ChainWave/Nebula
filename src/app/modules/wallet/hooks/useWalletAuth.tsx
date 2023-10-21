@@ -66,7 +66,12 @@ export function useWalletAuth() {
 
       const instanceProvider = new ComethProvider(instance);
 
-      const contract = new ethers.Contract(MATIC_ADDRESS, TOKEN_ABI, instanceProvider.getSigner());
+      // const contract = new ethers.Contract(MATIC_ADDRESS, TOKEN_ABI, instanceProvider.getSigner());
+      const contract = new ethers.Contract(
+        COUNTER_CONTRACT_ADDRESS,
+        COUNTER_ABI,
+        instanceProvider.getSigner()
+      );
 
       setContract(contract);
 
