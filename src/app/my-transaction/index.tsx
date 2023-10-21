@@ -59,7 +59,7 @@ export const MyTransaction = ({ isSuccess }: Props) => {
   return (
     <>
       <Wrapper>
-        <button onClick={readOnTable}>read</button>
+        {/* <button onClick={readOnTable}>read</button> */}
         {tablelandData.map((data, index) => (
           <div key={index}>
             <QrWrapper>

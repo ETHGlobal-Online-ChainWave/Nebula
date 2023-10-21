@@ -134,7 +134,7 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
         </SelectBox>
       )}
       <Wrapper>
-        <button onClick={writeOnTable}>Write on table</button>
+        {/* <button onClick={writeOnTable}>Write on table</button> */}
         <QrWrapper>
           <QrTitle>Create Qr Code</QrTitle>
           {isSaveClicked ? (
@@ -142,7 +142,7 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
           ) : (
             <img src="/qr-code 2.png" alt="qr-code-image" width={200} height={200} />
           )}
-          <Qrpreview>QR Preview</Qrpreview>
+          {/* <Qrpreview>QR Preview</Qrpreview> */}
         </QrWrapper>
         <BolderBox>
           <LeftCircle />
@@ -253,17 +253,17 @@ absolute top-[-6px] right-[-8px] w-16 h-16 rounded-full bg-gray8
 `;
 
 const TransactionWrapper = tw.div`
-  flex-center flex-col  h-400 rounded-b-20
-  bg-[#282833] w-328 p-24
+  flex flex-col h-400 rounded-b-20
+  bg-[#282833] w-328  p-24
 `;
 
 const TransactionContentBox = tw.div`
   flex-center justify-between  w-full h-full
-  gap-20 p-6
+  gap-4 p-6
 `;
 
 const TransactionBox = styled.div(() => [
-  tw`flex-col w-full px-20 py-16 flex-center h-320 bg-gray2 rounded-20`,
+  tw`flex-col w-full px-20 py-8 flex-center  bg-gray2 rounded-20`,
   css`
     border-radius: 16px;
     border: 1px solid #cfcffc5c;

@@ -176,8 +176,8 @@ export const ReadQrcode = ({ isSuccess }: Props) => {
     <>
       {data == "" ? (
         <Wrapper>
-          <Title>Scan</Title>
-          <ButtonSmall text="Send" isLoading={isTransactionLoading} onClick={handleSendClick} />
+          <Title>Scan QR Code</Title>
+
           <>
             <QrReader
               constraints={{ facingMode: "environment" }}
@@ -271,7 +271,7 @@ const FooterBarBox = tw.div`
 `;
 
 const QrReaderVideo = tw.video`
-    w-full h-500
+    w-full h-300
 `;
 
 const LoadingWrapper = tw.div`
