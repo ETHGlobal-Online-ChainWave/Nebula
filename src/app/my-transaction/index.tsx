@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import FooterBar from "../components/footer/footer-bar";
 import QrCodeImage from "public/qr-code.png";
 import tw, { css, styled } from "twin.macro";
@@ -10,6 +10,7 @@ import congratulation from "public/congratulation.json";
 import { Database } from "@tableland/sdk";
 import { ConnectAdaptor, SupportedNetworks } from "@cometh/connect-sdk";
 import { useWalletContext } from "../modules/wallet/hooks/useWalletContext";
+import { useWalletAuth } from "../modules/wallet/hooks/useWalletAuth";
 
 interface Props {
   isSuccess: boolean;
@@ -27,8 +28,16 @@ interface QrCodeData {
 
 export const MyTransaction = ({ isSuccess }: Props) => {
   const [tablelandData, setTablelandData] = useState<QrCodeData[]>([]);
-  const { wallet } = useWalletContext();
   const warpperRef = useRef<HTMLDivElement>(null);
+  const { wallet } = useWalletContext();
+  const { nfcSerialNumber } = useWalletAuth();
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+
+  useEffect(() => {
+    const localStorageAddress = window.localStorage.getItem("walletAddress");
+    const parsedAddress = JSON.parse(localStorageAddress || "{}");
+    setWalletAddress(parsedAddress[nfcSerialNumber!] || wallet?.getAddress());
+  }, [nfcSerialNumber, wallet]);
 
   useEffect(() => {
     if (!warpperRef.current) return;
@@ -48,13 +57,13 @@ export const MyTransaction = ({ isSuccess }: Props) => {
 
   const tableName: string = "neblula_one_80001_8032";
   const db = new Database();
-  const readOnTable = async () => {
+  const readOnTable = useCallback(async () => {
     const { results } = await db
-      .prepare(`SELECT * FROM ${tableName} WHERE receiveaddress = '${wallet?.getAddress()}'`)
+      .prepare(`SELECT * FROM ${tableName} WHERE receiveaddress = '${walletAddress}'`)
       .all();
     setTablelandData(results as QrCodeData[]);
-    console.log(results);
-  };
+    //console.log(results);
+  }, [walletAddress]);
 
   useEffect(() => {
     readOnTable();

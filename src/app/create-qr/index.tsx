@@ -16,7 +16,6 @@ interface Props {
 }
 
 export const CreateTransaction = ({ isSuccess }: Props) => {
-  const { wallet } = useWalletContext();
   const [isSaveClicked, setIsSaveClicked] = useState(false);
   const warpperRef = useRef<HTMLDivElement>(null);
   const [currentDate, setCurrentDate] = useState("");
@@ -25,8 +24,15 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
   const [isFinishClicked, setIsFinishClicked] = useState(false);
   const [qrCodeImageSrc, setQrCodeImageSrc] = useState("/qr-code 2.png");
   const [reWei, setReWei] = useState(0);
+  const { wallet } = useWalletContext();
+  const { nfcSerialNumber } = useWalletAuth();
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
-  const walletAddress = wallet?.getAddress();
+  useEffect(() => {
+    const localStorageAddress = window.localStorage.getItem("walletAddress");
+    const parsedAddress = JSON.parse(localStorageAddress || "{}");
+    setWalletAddress(parsedAddress[nfcSerialNumber!] || wallet?.getAddress());
+  }, [nfcSerialNumber, wallet]);
 
   useEffect(() => {
     if (!warpperRef.current) return;
