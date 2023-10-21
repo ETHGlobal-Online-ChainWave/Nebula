@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import FooterBar from "../components/footer/footer-bar";
 import NfcCardImage from "public/nfc-card.png";
 import tw from "twin.macro";
@@ -18,9 +18,13 @@ interface Props {
 export const MyCard = ({ isSuccess }: Props) => {
   const { wallet } = useWalletContext();
   const { nfcSerialNumber } = useWalletAuth();
-  const localStorageAddress = window.localStorage.getItem("walletAddress");
-  const parsedAddress = JSON.parse(localStorageAddress || "{}");
-  const walletAddress = parsedAddress[nfcSerialNumber!] || wallet?.getAddress();
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+
+  useEffect(() => {
+    const localStorageAddress = window.localStorage.getItem("walletAddress");
+    const parsedAddress = JSON.parse(localStorageAddress || "{}");
+    setWalletAddress(parsedAddress[nfcSerialNumber!] || wallet?.getAddress());
+  }, [nfcSerialNumber, wallet]);
 
   return (
     <>

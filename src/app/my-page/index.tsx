@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FooterBar from "../components/footer/footer-bar";
 import CreditCardImage from "public/credit-card.png";
 import tw, { css, styled } from "twin.macro";
@@ -20,13 +20,16 @@ interface Props {
 }
 
 export const MyPage = ({ isSuccess }: Props) => {
-  const warpperRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const { wallet } = useWalletContext();
   const { nfcSerialNumber } = useWalletAuth();
-  const localStorageAddress = window.localStorage.getItem("walletAddress");
-  const parsedAddress = JSON.parse(localStorageAddress || "{}");
-  const walletAddress = parsedAddress[nfcSerialNumber!] || wallet?.getAddress();
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
+  useEffect(() => {
+    const localStorageAddress = window.localStorage.getItem("walletAddress");
+    const parsedAddress = JSON.parse(localStorageAddress || "{}");
+    setWalletAddress(parsedAddress[nfcSerialNumber!] || wallet?.getAddress());
+  }, [nfcSerialNumber, wallet]);
   /* function safeStringify(obj: any, spacer = 2): string {
     const seen = new WeakSet();
 
@@ -46,10 +49,10 @@ export const MyPage = ({ isSuccess }: Props) => {
   } */
 
   useEffect(() => {
-    if (!warpperRef.current) return;
+    if (!wrapperRef.current) return;
     if (!isSuccess) return;
     lottie.loadAnimation({
-      container: warpperRef.current,
+      container: wrapperRef.current,
       renderer: "svg",
       loop: false,
       autoplay: true,
@@ -59,7 +62,7 @@ export const MyPage = ({ isSuccess }: Props) => {
     return () => {
       lottie.destroy();
     };
-  }, [warpperRef, isSuccess]);
+  }, [wrapperRef, isSuccess]);
 
   return (
     <>
@@ -92,7 +95,7 @@ export const MyPage = ({ isSuccess }: Props) => {
           </TokenWrapper>
         </TopWrapper>
         <Ellipse src={EllipseImage} alt="credit-card-image" />
-        <LottieWrapper ref={warpperRef} />
+        <LottieWrapper ref={wrapperRef} />
         <BottomWrapper>
           <TokenBalanceWrapper>
             <TokenBalanceBox>
