@@ -67,7 +67,7 @@ export function Transaction({ transactionSuccess, setTransactionSuccess }: Trans
   useEffect(() => {
     if (wallet) {
       (async () => {
-        const balance = await counterContract!.counters(wallet.getAddress());
+        const balance = await contract!.counters(wallet.getAddress());
         setNftBalance(Number(balance));
       })();
     }
@@ -83,12 +83,12 @@ export function Transaction({ transactionSuccess, setTransactionSuccess }: Trans
     try {
       if (!wallet) throw new Error("No wallet instance");
 
-      const tx: RelayTransactionResponse = await counterContract!.count();
+      const tx: RelayTransactionResponse = await contract!.count();
       setTransactionSended(tx);
 
       const txResponse = await tx.wait();
 
-      const balance = await counterContract!.counters(wallet.getAddress());
+      const balance = await contract!.counters(wallet.getAddress());
       setNftBalance(Number(balance));
 
       setTransactionResponse(txResponse);
