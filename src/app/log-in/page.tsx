@@ -27,7 +27,7 @@ function Page() {
           <LogInPage
             isConnected={isConnected}
             isNfcConnecting={isNfcConnecting}
-            handleNfcReading={handleNfcReading}
+            // handleNfcReading={handleNfcReading}
           />
         </>
       )}
