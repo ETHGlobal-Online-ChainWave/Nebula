@@ -14,7 +14,6 @@ interface Props {
   connectionError: string | null;
   isConnecting: boolean;
   isConnected: boolean;
-  nfcMessage: any;
   nfcSerialNumber: string | null;
   isNfcConnecting: boolean;
   connect: () => Promise<void>;
@@ -27,7 +26,6 @@ export const SignUpPage = ({
   isConnecting,
   isConnected,
   isNfcConnecting,
-  nfcMessage,
   nfcSerialNumber,
   handleNfcReading,
   connect,

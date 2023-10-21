@@ -13,7 +13,6 @@ function Page() {
     isConnected,
     isNfcConnecting,
     nfcSerialNumber,
-    nfcMessage,
     handleNfcReading,
     connect,
     connectionError,
@@ -31,7 +30,6 @@ function Page() {
             isConnected={isConnected}
             isNfcConnecting={isNfcConnecting}
             nfcSerialNumber={nfcSerialNumber}
-            nfcMessage={nfcMessage}
             handleNfcReading={handleNfcReading}
             connect={connect}
             connectionError={connectionError}

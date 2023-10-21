@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import FooterBar from "../components/footer/footer-bar";
 import QrCodeImage from "public/qr-code.png";
 import tw, { css, styled } from "twin.macro";
@@ -14,7 +14,18 @@ interface Props {
   isSuccess: boolean;
 }
 
+interface QrCodeData {
+  qrcode: string;
+  receiveAddress: string;
+  date: string;
+  token: string;
+  amount: number;
+  gaslimit: number;
+  validhour: number;
+}
+
 export const MyTransaction = ({ isSuccess }: Props) => {
+  const [tablelandData, setTablelandData] = useState<QrCodeData[]>([]);
   const warpperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -33,54 +44,63 @@ export const MyTransaction = ({ isSuccess }: Props) => {
     };
   }, [warpperRef, isSuccess]);
 
-  const tableName: string = "nebula_test_80001_7883";
+  const tableName: string = "neblula_one_80001_8032";
   const db = new Database();
   const readOnTable = async () => {
     const { results } = await db.prepare(`SELECT * FROM ${tableName};`).all();
+    setTablelandData(results as QrCodeData[]);
     console.log(results);
   };
+
+  useEffect(() => {
+    readOnTable();
+  }, []);
 
   return (
     <>
       <Wrapper>
         <button onClick={readOnTable}>read</button>
-        <QrWrapper>
-          <QrTitle>Transaction Qr Code</QrTitle>
-          <QrImage src={QrCodeImage} alt="qr-code-image" />
-        </QrWrapper>
-        <BolderBox>
-          <LeftCircle />
-          <DotBolder />
-          <RightCircle />
-        </BolderBox>
-        <TransactionWrapper>
-          <TransactionBox>
-            <TransactionContentBox>
-              <TransactionTitle>Name</TransactionTitle>
-              <TransactionContent>0</TransactionContent>
-            </TransactionContentBox>
-            <TransactionContentBox>
-              <TransactionTitle>Date</TransactionTitle>
-              <TransactionContent>0</TransactionContent>
-            </TransactionContentBox>
-            <TransactionContentBox>
-              <TransactionTitle>Token</TransactionTitle>
-              <TransactionContent>0</TransactionContent>
-            </TransactionContentBox>
-            <TransactionContentBox>
-              <TransactionTitle>Amount</TransactionTitle>
-              <TransactionContent>0</TransactionContent>
-            </TransactionContentBox>
-            <TransactionContentBox>
-              <TransactionTitle>Gas Fee</TransactionTitle>
-              <TransactionContent>0</TransactionContent>
-            </TransactionContentBox>
-            <TransactionContentBox>
-              <TransactionTitle>Validity</TransactionTitle>
-              <TransactionContent>0</TransactionContent>
-            </TransactionContentBox>
-          </TransactionBox>
-        </TransactionWrapper>
+        {tablelandData.map((data, index) => (
+          <div key={index}>
+            <QrWrapper>
+              <QrTitle>Transaction Qr Code</QrTitle>
+              <img src={data.qrcode} alt="qr-code-image" width={200} height={200} />
+            </QrWrapper>
+            <BolderBox>
+              <LeftCircle />
+              <DotBolder />
+              <RightCircle />
+            </BolderBox>
+            <TransactionWrapper>
+              <TransactionBox>
+                <TransactionContentBox>
+                  <TransactionTitle>Name</TransactionTitle>
+                  <TransactionContent>{data.receiveAddress}</TransactionContent>
+                </TransactionContentBox>
+                <TransactionContentBox>
+                  <TransactionTitle>Date</TransactionTitle>
+                  <TransactionContent>{data.date}</TransactionContent>
+                </TransactionContentBox>
+                <TransactionContentBox>
+                  <TransactionTitle>Token</TransactionTitle>
+                  <TransactionContent>{data.token}</TransactionContent>
+                </TransactionContentBox>
+                <TransactionContentBox>
+                  <TransactionTitle>Amount</TransactionTitle>
+                  <TransactionContent>{data.amount / 1e18}</TransactionContent>
+                </TransactionContentBox>
+                <TransactionContentBox>
+                  <TransactionTitle>Gas Limit</TransactionTitle>
+                  <TransactionContent>{data.gaslimit}</TransactionContent>
+                </TransactionContentBox>
+                <TransactionContentBox>
+                  <TransactionTitle>Validity</TransactionTitle>
+                  <TransactionContent>{data.validhour}hour</TransactionContent>
+                </TransactionContentBox>
+              </TransactionBox>
+            </TransactionWrapper>
+          </div>
+        ))}
       </Wrapper>
 
       <FooterBarBox>
@@ -91,11 +111,7 @@ export const MyTransaction = ({ isSuccess }: Props) => {
 };
 
 const Wrapper = styled.div(() => [
-  tw`
-    flex flex-col h-full
-    items-center justify-center 
-    overflow-y-auto mt-24
-`,
+  tw`flex flex-col items-center justify-center h-full mt-24 overflow-y-auto `,
 ]);
 
 const FooterBarBox = tw.div`
@@ -104,7 +120,7 @@ const FooterBarBox = tw.div`
 
 const QrWrapper = tw.div`
   flex-center flex-col w-328 h-300 h-1/2 bg-gray7
-  rounded-t-20 gap-27
+  rounded-t-20 gap-27 mt-10
 `;
 
 const QrTitle = tw.div`
@@ -142,10 +158,7 @@ const TransactionContentBox = tw.div`
 `;
 
 const TransactionBox = styled.div(() => [
-  tw`
-    flex-center flex-col w-full h-full
-    bg-gray2 rounded-20 py-16 px-20
-`,
+  tw`flex-col w-full h-full px-20 py-16 flex-center bg-gray2 rounded-20`,
   css`
     border-radius: 16px;
     border: 1px solid #cfcffc5c;
