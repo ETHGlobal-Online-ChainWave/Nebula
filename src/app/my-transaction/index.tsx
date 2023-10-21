@@ -32,6 +32,7 @@ export const MyTransaction = ({ isSuccess }: Props) => {
   const { wallet } = useWalletContext();
   const { nfcSerialNumber } = useWalletAuth();
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [message, setMessage] = useState("Loading...");
 
   useEffect(() => {
     const localStorageAddress = window.localStorage.getItem("walletAddress");
@@ -57,27 +58,30 @@ export const MyTransaction = ({ isSuccess }: Props) => {
 
   const tableName: string = "neblula_one_80001_8032";
   const db = new Database();
-  const readOnTable = useCallback(async () => {
+  const readOnTable = async () => {
     const { results } = await db
       .prepare(`SELECT * FROM ${tableName} WHERE receiveaddress = '${walletAddress}'`)
       .all();
     setTablelandData(results as QrCodeData[]);
-    //console.log(results);
-  }, [walletAddress]);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMessage("No QR code has been created");
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     readOnTable();
-  }, []);
-
-  const sliceaddress = (address: string) => {
-    return address.slice(0, 6) + "..." + address.slice(-4);
-  };
+  }, [tablelandData]);
 
   return (
     <>
       <Wrapper>
         {/* <button onClick={readOnTable}>read</button> */}
-        {tablelandData.length > 0 ? (
+        {tablelandData.length ? (
           tablelandData.map((data, index) => (
             <div key={index}>
               <QrWrapper>
@@ -124,7 +128,7 @@ export const MyTransaction = ({ isSuccess }: Props) => {
             </div>
           ))
         ) : (
-          <div className="font-r-16 text-white mt-10">No QR code has been created</div>
+          <div className="font-r-16 text-white mt-10">{message}</div>
         )}
       </Wrapper>
 

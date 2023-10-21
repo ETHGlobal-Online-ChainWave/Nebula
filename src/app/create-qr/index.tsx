@@ -206,7 +206,7 @@ export const CreateTransaction = ({ isSuccess }: Props) => {
               <TransactionContent>1hour</TransactionContent>
             </TransactionContentBox>
           </TransactionBox>
-          <SaveBox onClick={handleSaveClick}>
+          <SaveBox onClick={handleSaveClick} disabled={!isTokenSelected || !amount}>
             {isFinishClicked ? <SaveText>Contract Issuance</SaveText> : <SaveText>Save</SaveText>}
           </SaveBox>
         </TransactionWrapper>
@@ -279,7 +279,7 @@ const TransactionBox = styled.div(() => [
   `,
 ]);
 
-const SaveBox = styled.div(() => [
+const SaveBox = styled.button(() => [
   tw`flex-col w-full px-20 py-16 flex-center h-50 bg-gray2 rounded-20`,
   css`
     border-radius: 30px;
