@@ -15,6 +15,23 @@ interface TransactionProps {
   setTransactionSuccess: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+export async function sendTransaction(fromAddress: String, toAddress: String, sendamount: number) {
+  const ethers = require('ethers');
+  
+  const provider = new ethers.providers.JsonRpcProvider('<YOUR_INFURA_API_URL>');
+  const wallet = new ethers.Wallet('<PRIVATE_KEY>', provider);
+
+  const tx = {
+    to: toAddress,
+    value: ethers.utils.parseEther(sendamount.toString())
+  };
+
+  const sendResult = await wallet.sendTransaction(tx);
+  console.log('Transaction sent:', sendResult);
+
+  return sendResult;
+}
+
 export function Transaction({
   transactionSuccess,
   setTransactionSuccess,
