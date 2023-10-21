@@ -56,6 +56,10 @@ export const MyTransaction = ({ isSuccess }: Props) => {
     readOnTable();
   }, []);
 
+  const sliceAddress = (address: string) => {
+    return address.slice(0, 6) + "..." + address.slice(-4);
+  };
+
   return (
     <>
       <Wrapper>
@@ -75,7 +79,7 @@ export const MyTransaction = ({ isSuccess }: Props) => {
               <TransactionBox>
                 <TransactionContentBox>
                   <TransactionTitle>Name</TransactionTitle>
-                  <TransactionContent>{data.receiveAddress}</TransactionContent>
+                  <TransactionContent>{sliceAddress(data.receiveAddress)}</TransactionContent>
                 </TransactionContentBox>
                 <TransactionContentBox>
                   <TransactionTitle>Date</TransactionTitle>
