@@ -1,4 +1,4 @@
-https:/![nebula](https://github.com/ETHGlobal-Online-ChainWave/Nebula/assets/59263564/0d16fbd6-351b-4f98-8144-02c1dc33b6a1)
+![nebula](https://github.com/ETHGlobal-Online-ChainWave/Nebula/assets/59263564/0d16fbd6-351b-4f98-8144-02c1dc33b6a1)
 /youtu.be/BiPv0tLxyPM?si=PbNzWvl_Dlev0l_w
 # NeBula Overview
 
