@@ -75,7 +75,9 @@ export const ReadQrcode = ({ isSuccess }: Props) => {
   const getUserCamera = () => {
     navigator.mediaDevices
       .getUserMedia({
-        video: true,
+        video: {
+          facingMode: "environment",
+        },
       })
       .then((stream: MediaStream) => {
         let video = videoRef.current;
