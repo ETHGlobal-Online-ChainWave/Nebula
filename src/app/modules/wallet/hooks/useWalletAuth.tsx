@@ -9,16 +9,20 @@ import {
 import { useState } from "react";
 import { useWalletContext } from "./useWalletContext";
 import { useNfc } from "./useNfc";
+import { ethers } from "ethers";
+import { COUNTER_ABI } from "@/abi/counter";
+import { TOKEN_ABI } from "@/abi/sample-token";
 
 export function useWalletAuth() {
   const { isNfcConnecting, nfcSerialNumber, handleNfcReading } = useNfc(connect);
-  const { wallet, setWallet, setProvider } = useWalletContext();
+  const { wallet, setWallet, setProvider, contract, setContract } = useWalletContext();
   const [isConnecting, setIsConnecting] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [connectionError, setConnectionError] = useState<string | null>(null);
 
   const apiKey = process.env.NEXT_PUBLIC_COMETH_API_KEY;
-  // const COUNTER_CONTRACT_ADDRESS = "0x3633A1bE570fBD902D10aC6ADd65BB11FC914624";
+  const COUNTER_CONTRACT_ADDRESS = "0x3633A1bE570fBD902D10aC6ADd65BB11FC914624";
+  const MATIC_ADDRESS = "0x0000000000000000000000000000000000001010";
 
   function displayError(message: string) {
     setConnectionError(message);
@@ -62,13 +66,9 @@ export function useWalletAuth() {
 
       const instanceProvider = new ComethProvider(instance);
 
-      /* const contract = new ethers.Contract(
-        COUNTER_CONTRACT_ADDRESS,
-        countContractAbi,
-        instanceProvider.getSigner()
-      );
+      const contract = new ethers.Contract(MATIC_ADDRESS, TOKEN_ABI, instanceProvider.getSigner());
 
-      setCounterContract(contract); */
+      setContract(contract);
 
       setIsConnected(true);
       setWallet(instance as any);
@@ -105,5 +105,7 @@ export function useWalletAuth() {
     handleNfcReading,
     connectionError,
     setConnectionError,
+    contract,
+    setContract,
   };
 }

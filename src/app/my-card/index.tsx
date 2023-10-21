@@ -9,6 +9,7 @@ import lottie from "lottie-web/build/player/lottie_light";
 import congratulation from "public/congratulation.json";
 import { useWalletContext } from "../modules/wallet/hooks/useWalletContext";
 import { useWalletAuth } from "../modules/wallet/hooks/useWalletAuth";
+import NebulaLogoImage from "public/nebula-logo.png";
 
 interface Props {
   isSuccess: boolean;
@@ -27,7 +28,7 @@ export const MyCard = ({ isSuccess }: Props) => {
         <Title>My Credit Card</Title>
         <CardImageWrapper>
           <CardImage>
-            <CardLogo src="/mastercard-logo.svg" alt="mastercard" width={56} height={34} />
+            <CardLogo src={NebulaLogoImage} alt="mastercard" width={56} height={34} />
             <CardTitle>NEBULA</CardTitle>
             <CardUser>John Doe</CardUser>
             <CardAddress>
