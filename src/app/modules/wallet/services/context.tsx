@@ -8,26 +8,21 @@ export const WalletContext = createContext<{
   setWallet: Dispatch<SetStateAction<ComethWallet | null>>;
   provider: ComethProvider | null;
   setProvider: Dispatch<SetStateAction<ComethProvider | null>>;
-  counterContract: ethers.Contract | null;
-  setCounterContract: Dispatch<SetStateAction<any | null>>;
+  contract: ethers.Contract | null;
+  setContract: Dispatch<SetStateAction<any | null>>;
 }>({
   wallet: null,
   setWallet: () => {},
   provider: null,
   setProvider: () => {},
-  counterContract: null,
-  setCounterContract: () => {},
+  contract: null,
+  setContract: () => {},
 });
 
-export function WalletProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}): JSX.Element {
+export function WalletProvider({ children }: { children: React.ReactNode }): JSX.Element {
   const [wallet, setWallet] = useState<ComethWallet | null>(null);
   const [provider, setProvider] = useState<ComethProvider | null>(null);
-  const [counterContract, setCounterContract] =
-    useState<ethers.Contract | null>(null);
+  const [contract, setContract] = useState<ethers.Contract | null>(null);
 
   return (
     <WalletContext.Provider
@@ -36,8 +31,8 @@ export function WalletProvider({
         setWallet,
         provider,
         setProvider,
-        counterContract,
-        setCounterContract,
+        contract,
+        setContract,
       }}
     >
       {children}

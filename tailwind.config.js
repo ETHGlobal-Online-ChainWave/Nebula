@@ -27,6 +27,10 @@ module.exports = {
     },
 
     extend: {
+      rotate: {
+        '4': '4deg',
+      },
+
       colors: {
         ...defaultTheme.colors,
 
