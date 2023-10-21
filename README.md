@@ -1,25 +1,30 @@
+https:/![nebula](https://github.com/ETHGlobal-Online-ChainWave/Nebula/assets/59263564/0d16fbd6-351b-4f98-8144-02c1dc33b6a1)
+/youtu.be/BiPv0tLxyPM?si=PbNzWvl_Dlev0l_w
 # NeBula Overview
 
-We worked on a project using React and TypeScript for the frontend. 
-- To quickly connect to the blockchain and ensure efficiency and security of the work, We utilized the Metamask SDK for connection.   
-- We adopted the immutable function structure of Uniswap and calculated values such as "Strike" and "AmountIn" on the frontend.  
-- In this case, We utilized Multicall extensively to obtain the balances of various ERC20 assets across multiple chains.
-- To make our service user-friendly for those who are new to crypto, We designed it with a user-friendly interface.   
-  - For example, even if there is only one token, users can still set a pair and have the opportunity to engage in future trading.  
-- We simplified complex functions such as hedging amount and margin ratio for easy understanding.   
-- We believe this will greatly contribute to the expansion of Web3 solutions.  
+We have developed a system that leverages NFC for wallet creation and login, as well as QR codes for transaction generation and approval. Both NFC tagging and QR codes offer convenient solutions for mobile users, and we've integrated these technologies into the blockchain.
 
-## Introducing Defutures
-Revolutionize your Web3 investments with our 100% decentralized futures market on the Ethereum Virtual Machine (EVM). Defutures tackles the critical issue of position value drops in existing DeFi platforms, which result from the volatility of paired tokens. By offering the ability to open hedging future positions, Defutures provides a robust solution to this challenge.
+The reason behind our creation of NFC card wallets stems from the shortcomings of existing wallet systems. Custodial wallets often suffer from the Trusted Entity problem, and Key Management Service (KMS) wallets share similar issues. Mobile wallets typically require app installation and setup, and hardware wallets can be expensive and have limited token support.
+
+With our NFC card wallet system, anyone can create a wallet using their readily available NFC credit or debit cards. This system facilitates seamless offline payments using NFC cards, making in-store purchases and participation in offline events more straightforward.
+
+Furthermore, when it comes to generating and approving transactions, we've streamlined the process by using QR codes, reducing the user's manual effort. This feature can prove to be highly valuable for real-world retail purchases, offline events, and various situations where QR codes are employed.
+
+## Introducing Our Tech
+The main points are NFC, QRCODE, Cometh SDK, Tableland, and EIP 681.
+Cometh allows first time users to adapt web3 for easy wallet creation and processing processor with zero -gas -fee.
+Create a wallet and log in by tagging NFC using NFC web api.
+When creating a processor with a qr code, the corresponding qr image was saved in a decentralized database table to pull out the corresponding qr transaction.
+Convenience has been increased by using EIP-681, which converts transaction requests into QR codes.
 
 ## Tech Stack
 - React.js
 - Typescript
 - TailwindCss
 - ethers.js
-- typechain
-- recoil
-- Multicall
+- Nfc API
+- Cometh
+- Tableland
 
 
 ## Start
