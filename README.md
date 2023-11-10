@@ -19,7 +19,7 @@ When creating a processor with a qr code, the corresponding qr image was saved i
 Convenience has been increased by using EIP-681, which converts transaction requests into QR codes.
 
 ## Tech Stack
-- React.js
+- Next.js
 - Typescript
 - TailwindCss
 - ethers.js
